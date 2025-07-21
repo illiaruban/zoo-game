@@ -7,7 +7,7 @@ import java.util.HashMap;
 * there will be 4 kinds of animals to implement: mammals, birds, insects and reptiles
 * mammals can be aggressive or passive: in case of aggressive mammal lack of food will make them scare customers off("Claws off!")
 * insects will die if not fed for some time("Vanished!")
-* birds will take 25% of their income if not fed but add 10% if they will be regularly fed("Healthy Feathers")
+* birds will take 25% of their income if not fed but add 12.5% if they will be regularly fed("Healthy Feathers")
 * reptiles will eat each other if not fed("Wild Nature") - (!)works for 3+ animals in one domain
 *
 * */
@@ -88,4 +88,5 @@ public abstract class Animal {
 
     public abstract double getIncome();
 
+    //TODO: write end-day function for all animals which checks how well animal has been fed
 }

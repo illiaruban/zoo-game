@@ -13,6 +13,9 @@ public class Zoo {
     private double balance;
     private HashMap<AnimalType, Integer> foodStorage;
 
+    private static boolean decreaseVisitors = false;
+    private static int amountVisitors = 15;
+
 
     public Zoo() {
         balance = 1000;
@@ -47,6 +50,14 @@ public class Zoo {
     }
 
     public HashMap<AnimalType, Integer> getFoodStorage() {return foodStorage;}
+
+    public static void setNumberOfVisitors(int numberOfVisitors) { amountVisitors = numberOfVisitors; }
+
+    public static int getNumberOfVisitors() { return amountVisitors; }
+
+    public static void setDecreaseVisitors(boolean decrease) { decreaseVisitors = decrease; }
+
+    public static boolean isDecreaseVisitors() { return decreaseVisitors; }
 
 
     //TODO: make conditions in the functions, define exceptions
@@ -87,5 +98,7 @@ public class Zoo {
             }
         }
     }
+
+
 
 }
