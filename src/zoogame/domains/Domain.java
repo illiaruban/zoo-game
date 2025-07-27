@@ -1,15 +1,17 @@
-package zoogame;
+package zoogame.domains;
 
 import zoogame.animals.Animal;
+import zoogame.animals.Reptile;
 import zoogame.animals.SizeClass;
+import zoogame.exceptions.InvalidAnimalAddedException;
 
 import java.util.ArrayList;
 
 public class Domain {
-    private String nameOfDomain;
-    private ArrayList<Animal> animals;
-    private SizeClass sizeClass = SizeClass.TINY;
-    private double price;
+    protected String nameOfDomain;
+    protected ArrayList<Animal> animals;
+    protected SizeClass sizeClass = SizeClass.TINY;
+    protected double price;
 
     public Domain() {
         nameOfDomain = "Empty domain";
@@ -32,9 +34,12 @@ public class Domain {
         return animals.size();
     }
 
-    protected void addAnimal(Animal animal) {
+    public void addAnimal(Animal animal) throws InvalidAnimalAddedException {
         if (animals.isEmpty()) {
             nameOfDomain = animal.getName() + " domain";
+        }
+        if (animal instanceof Reptile) {
+            throw new InvalidAnimalAddedException("[EXCEPTION!]Reptile cannot be added to common domain.\n");
         }
         if (animals.get(0).getMaxAmountInDomain() > animals.size())
         {
@@ -45,7 +50,7 @@ public class Domain {
         }
     }
 
-    protected void takeAnimal(Animal animal) {
+    public void takeAnimal(Animal animal) {
         animals.remove(animal);
     }
 
@@ -70,7 +75,7 @@ public class Domain {
             string += "Domain can contain " + (animals.get(0).getMaxAmountInDomain() - animals.size()) + "animals more\n";
         }
         else if (command.equals("shopview")) {
-            string += String.format("%s domain\nPrice: %f\n");
+            string += String.format("%s domain\nPrice: %f\n", sizeClass, price);
         }
         else {
             string += "Invalid command\n";

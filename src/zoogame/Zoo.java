@@ -3,6 +3,8 @@ package zoogame;
 import zoogame.animals.Animal;
 import zoogame.animals.AnimalType;
 import zoogame.animals.SizeClass;
+import zoogame.domains.Domain;
+import zoogame.exceptions.InvalidAnimalAddedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,12 +81,18 @@ public class Zoo {
         domains.remove(domain);
     }
 
+    //TODO:check if animal is reptile as fast as possible to create a reptile domain
     public void buyAnimal(Animal animal) {
         balance -= animal.getPrice();
         for (Domain domain: domains) {
             if (domain.getNameOfDomain().contains(animal.getName()) || domain.getNameOfDomain().equals("Empty domain")) {
-                domain.addAnimal(animal);
-                break;
+                try {
+                    domain.addAnimal(animal);
+                    break;
+                }
+                catch(InvalidAnimalAddedException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
