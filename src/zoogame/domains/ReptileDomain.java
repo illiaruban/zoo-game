@@ -3,13 +3,12 @@ package zoogame.domains;
 import zoogame.animals.Animal;
 import zoogame.animals.Reptile;
 import zoogame.animals.SizeClass;
-import zoogame.domains.Domain;
 import zoogame.exceptions.InvalidAnimalAddedException;
 
 
 public class ReptileDomain extends Domain {
 
-    private boolean isRumbleTime = false;
+    private boolean rumbleTime = false;
 
     public ReptileDomain() {
         super();
@@ -19,41 +18,45 @@ public class ReptileDomain extends Domain {
         super(price, sizeClass);
     }
 
-    public void setStartRumble(boolean isRumbleTime) {
-        this.isRumbleTime = isRumbleTime;
+
+
+    public void setRumbleTime(boolean isRumbleTime) {
+        this.rumbleTime = isRumbleTime;
     }
 
-    public boolean getStartRumble() {
-        return isRumbleTime;
+    public boolean isRumbleTime() {
+        return rumbleTime;
     }
 
     @Override
-    public void addAnimal(Animal animal) throws InvalidAnimalAddedException {
-        if (animals.isEmpty()) {
-            nameOfDomain = animal.getName() + " domain";
-        }
+    public void addAnimal(Animal animal, boolean check) throws InvalidAnimalAddedException {
         if (!(animal instanceof Reptile)) {
-            throw new InvalidAnimalAddedException("[EXCEPTION!]Other animals cannot be added to reptile domains.\n");
+            throw new InvalidAnimalAddedException("[EXCEPTION!]Other animals cannot be added to reptile domains.\n" +
+                    "Type of given animal: " + animal.getClass() + ".\n");
         }
-        if (animals.get(0).getMaxAmountInDomain() > animals.size())
-        {
-            animals.add(animal);
-        }
-        else {
-            System.out.println("Domain cannot contain more animals\n");
-        }
+        super.addAnimal(animal);
     }
 
-    //TODO: implement observer pattern for reptile domain
-    public void startRumble() {
-        if (isRumbleTime) {
-            int newSize = (int) (super.animals.size() / 1.5);
-            if (newSize < animals.size()) {
-                animals.subList(newSize, animals.size()).clear();
+    /**
+     * checks on every reptile in domain and in case of one starving it starts a rumble
+     */
+    public void checkOnHabitants() {
+        for (Animal animal: animals) {
+            if (animal.getCounter() <= 3) {
+                rumbleTime = true;
+                break;
             }
         }
     }
 
+    /**
+     * starts rumble: divides the amount of habitants by 1.5 and deletes the sublist of the required length
+     */
+    public void startRumble() {
+        if (animals == null || animals.size() < 3) return;
+        int newSize = (int)(animals.size() / 1.5);
+        animals.subList(newSize, animals.size()).clear();
+    }
 
 
 }

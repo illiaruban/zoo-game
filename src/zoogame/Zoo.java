@@ -81,7 +81,7 @@ public class Zoo {
         domains.remove(domain);
     }
 
-    //TODO:check if animal is reptile as fast as possible to create a reptile domain
+    //TODO:check if animal is reptile or insect as fast as possible to create a reptile domain
     public void buyAnimal(Animal animal) {
         balance -= animal.getPrice();
         for (Domain domain: domains) {

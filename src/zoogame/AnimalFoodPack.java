@@ -36,8 +36,6 @@ public class AnimalFoodPack {
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
 
-
-    //TODO: add toString() method
     public String toString() {
         String string = getNameOfPack() + " contains:\n";
         for (AnimalType type: content.keySet()) {

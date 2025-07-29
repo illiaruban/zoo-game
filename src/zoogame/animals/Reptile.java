@@ -3,7 +3,6 @@ package zoogame.animals;
 public class Reptile extends Animal{
     private boolean isEaten = false;
     private final double fullIncome = super.price / 1.5;
-    private int lowerQuality;
     private int countToEat = 0;
 
     public Reptile(String name, double price) {
@@ -19,15 +18,23 @@ public class Reptile extends Animal{
         return "";
     }
 
-    //if there are 3+ animals and one of them is not fed well enough, reptiles start eating each other
-    //possible idea: create class ReptileDomain with one function that makes it possible - possible idea for scaling it further
-    //TODO: decide what to do with reptile domain, how to give the info to it through its habitants
-    public double getIncome(){
-        for (Integer quality : super.feedForDaysList) {
+    @Override
+    public int getCounter() {
+        for (Integer quality: feedForDaysList) {
             if (quality <= lowerQuality) {
                 countToEat++;
             }
         }
+        int counter = countToEat;
+        countToEat = 0;
+        return counter;
+    }
+
+    //TODO: write getIncome()
+    public double getIncome(){
+
         return 0.0;
     }
+
+
 }

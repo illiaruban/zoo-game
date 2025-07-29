@@ -4,7 +4,6 @@ public class Bird extends Animal{
     private int counterToSubtract = 0;
     private int counterToAdd = 1;
     private int maxQuality;
-    private int lowerQuality;
     public Bird(String name, double price) {
         super(name, price);
     }
@@ -15,8 +14,18 @@ public class Bird extends Animal{
         lowerQuality = maxQuality == 3 ? 2 : 1;
     }
 
+    @Override
+    public int getCounter() {
+        for (Integer quality : feedForDaysList ) {
+            if (quality <= lowerQuality) {
+                counterToSubtract++;
+            }
+        }
+        int counter = counterToSubtract;
+        counterToSubtract = 0;
+        return counter;
+    }
 
-    //TODO: create getIncome() function to take income if bird was not regularly fed for 2 days(check if list of feedings is lower than 2)
     public double getIncome(){
         for (Integer quality : feedForDaysList ) {
             if (quality == maxQuality && counterToAdd > 0) {
@@ -35,7 +44,8 @@ public class Bird extends Animal{
         } else {
             income = fullIncome;
         }
-
+        counterToAdd = 1;
+        counterToSubtract = 0;
         return Math.round(income * 100.0) / 100.0;
     }
 }

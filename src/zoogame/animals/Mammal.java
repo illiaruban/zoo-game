@@ -6,7 +6,6 @@ public class Mammal extends Animal{
 
     boolean isAggressive = false;
     private final double fullIncome = super.price / 1.5;
-    private int lowerQuality;
     private int aggressiveCount = 0;
     private int counterToSubtract = 0;
     public Mammal(String name, double price) {
@@ -23,6 +22,20 @@ public class Mammal extends Animal{
     public String toString() {
         return super.toString() + "Aggressive: " + (isAggressive ? "yes" : "no" + "\n");
     }
+
+    @Override
+    public int getCounter() {
+        for (Integer quality : super.feedForDaysList) {
+            if (quality <= lowerQuality) {
+                if (isAggressive) aggressiveCount++;
+                counterToSubtract++;
+            }
+        }
+        int counter = counterToSubtract;
+        counterToSubtract = 0;
+        return counter;
+    }
+
     //if mammal is aggressive and is not fed for 2 days - numbers of customers will decrease
     // for every unfed animal and income is too by 10%
     //if mammal is non-aggressive - the income will decrease by 30%
@@ -42,6 +55,8 @@ public class Mammal extends Animal{
         else if (counterToSubtract == 2) {
             subtractIncome = fullIncome * 0.3;
         }
+        aggressiveCount = 0;
+        counterToSubtract = 0;
         return fullIncome - subtractIncome;
     }
 }
