@@ -1,8 +1,7 @@
 package zoogame.animals;
 
 public class Reptile extends Animal{
-    private boolean isEaten = false;
-    private final double fullIncome = super.price / 1.5;
+    private final double fullIncome = super.price / 1.7;
     private int countToEat = 0;
 
     public Reptile(String name, double price) {
@@ -13,9 +12,9 @@ public class Reptile extends Animal{
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public Reptile(Reptile other) {
+        super(other);
+        this.countToEat = other.countToEat;
     }
 
     @Override
@@ -30,10 +29,8 @@ public class Reptile extends Animal{
         return counter;
     }
 
-    //TODO: write getIncome()
     public double getIncome(){
-
-        return 0.0;
+        return fullIncome;
     }
 
 

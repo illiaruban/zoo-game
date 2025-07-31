@@ -1,23 +1,17 @@
 package zoogame.domains;
 
-import zoogame.animals.Animal;
-import zoogame.animals.Insect;
-import zoogame.animals.Reptile;
-import zoogame.animals.SizeClass;
-import zoogame.exceptions.InvalidAnimalAddedException;
-import zoogame.exceptions.InvalidSizeClassAddedException;
+import zoogame.animals.*;
 
 import java.util.ArrayList;
 
 public class Domain {
     protected String nameOfDomain;
-    protected ArrayList<Animal> animals;
+    protected ArrayList<Animal> animals = new ArrayList<>();
     protected SizeClass sizeClass = SizeClass.TINY;
     protected double price;
 
     public Domain() {
         nameOfDomain = "Empty domain";
-        animals = new ArrayList<>();
     }
 
     public Domain(double price, SizeClass sizeClass){
@@ -36,32 +30,9 @@ public class Domain {
         return animals.size();
     }
 
-    //TODO: handle new exceptions in other classes
-    //possible idea: just give it one step more
-
-    public void addAnimal(Animal animal) throws InvalidSizeClassAddedException {
-        if (animals.isEmpty()) {
-            nameOfDomain = animal.getName() + " domain";
-        }
-        if (animal.getSizeClass() != sizeClass) {
-            throw new InvalidSizeClassAddedException("[EXCEPTION!] Size class of domain is not identical with size class of" +
-                    "an animal. Size class of an animal: " + animal.getSizeClass() + "\n");
-        }
-        if (animals.getFirst().getMaxAmountInDomain() > animals.size())
-        {
-            animals.add(animal);
-        }
-        else {
-            System.out.println("Domain cannot contain more animals\n");
-        }
-    }
-
-    public void addAnimal(Animal animal, boolean check) throws InvalidAnimalAddedException{
-        if (animal instanceof Reptile || animal instanceof Insect) {
-            throw new InvalidAnimalAddedException("[EXCEPTION!] Invalid type of animal added to common domain: " +
-                    animal.getClass() + "\n");
-        }
-        addAnimal(animal);
+    //might write all the checks in zoo function as its zoo's job to check all conditions to add animal in domains
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
     }
 
     public void takeAnimal(Animal animal) {
@@ -97,6 +68,10 @@ public class Domain {
         return string;
     }
 
-
+    public boolean containsAnimalsLike(Animal animal) {
+        if (animals.isEmpty()) return false;
+        return animals.getFirst().getAnimalType() == animal.getAnimalType() &&
+                animals.getFirst().getName().equals(animal.getName());
+    }
 
 }

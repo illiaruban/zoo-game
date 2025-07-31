@@ -1,16 +1,18 @@
 package zoogame;
 
-import zoogame.animals.Animal;
-import zoogame.animals.AnimalType;
-import zoogame.animals.SizeClass;
+import zoogame.animals.*;
 import zoogame.domains.Domain;
-import zoogame.exceptions.InvalidAnimalAddedException;
+import zoogame.domains.InsectDomain;
+import zoogame.domains.ReptileDomain;
+import zoogame.exceptions.LowBalanceException;
+import zoogame.exceptions.NoAnimalFoundException;
+import zoogame.exceptions.NoDomainFoundForAnimalException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Zoo {
-    private ArrayList<Domain> domains;
+    private ArrayList<Domain> domains = new ArrayList<>();
     private boolean isOpened = false;
     private double balance;
     private HashMap<AnimalType, Integer> foodStorage;
@@ -70,7 +72,11 @@ public class Zoo {
             foodStorage.put(type, currentFoodAmount + foodPack.content.get(type));
         }
     }
-    public void buyDomain(Domain domain) {
+    public void buyDomain(Domain domain) throws LowBalanceException {
+        if (balance < domain.getPrice())
+        {
+            throw new LowBalanceException("The budget cannot allow to purchase the domain");
+        }
         balance -= domain.getPrice();
         Domain addedDomain = new Domain(domain);
         domains.add(addedDomain);
@@ -81,29 +87,65 @@ public class Zoo {
         domains.remove(domain);
     }
 
-    //TODO:check if animal is reptile or insect as fast as possible to create a reptile domain
-    public void buyAnimal(Animal animal) {
-        balance -= animal.getPrice();
+
+    /**
+     * checks if:
+     * balance is enough
+     * there is a domain for animal with passing size class, type
+     * and adds an animal to the first domain in the loop with satisfied conditions
+     *
+     * @param animal
+     */
+    public void buyAnimal(Animal animal) throws NoDomainFoundForAnimalException, LowBalanceException {
+        if (balance < animal.getPrice()) {
+            throw new LowBalanceException("The budget cannot allow the purchase of the animal");
+        }
+
+        boolean lookForInsectDomain = false;
+        boolean lookForReptileDomain = false;
+        Domain domainWithNoAnimals = null;
+        Domain domainWithLikeAnimals = null;
+
+        if (animal instanceof Insect) lookForInsectDomain = true;
+        if (animal instanceof Reptile) lookForReptileDomain = true;
+
         for (Domain domain: domains) {
-            if (domain.getNameOfDomain().contains(animal.getName()) || domain.getNameOfDomain().equals("Empty domain")) {
-                try {
-                    domain.addAnimal(animal);
-                    break;
-                }
-                catch(InvalidAnimalAddedException e) {
-                    System.out.println(e.getMessage());
-                }
+            if (lookForInsectDomain && !(domain instanceof InsectDomain)) continue;
+            else if (lookForReptileDomain && !(domain instanceof ReptileDomain)) continue;
+            else if (domain.getSizeClass() != animal.getSizeClass()) continue;
+            else if (domain.getCurrentAmountOfAnimals() > animal.getMaxAmountInDomain()) continue;
+            if (domain.getNameOfDomain().equals("Empty domain")) domainWithNoAnimals = domain;
+            if (domain.containsAnimalsLike(animal)) domainWithLikeAnimals = domain;
+            if (domainWithNoAnimals != null && domainWithLikeAnimals != null) break;
+        }
+        try {
+            if (domainWithLikeAnimals != null) domainWithLikeAnimals.addAnimal(animal);
+            else if (domainWithNoAnimals != null) domainWithNoAnimals.addAnimal(animal);
+            else {
+                throw new NoDomainFoundForAnimalException("No domain found for this animal");
             }
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public void sellAnimal(Animal animal) {
-        balance += animal.getAnimalType() == AnimalType.INSECT ? animal.getPrice() / 2 : animal.getAnimalType() == AnimalType.MAMMAL ? animal.getPrice() / 1.75 : animal.getPrice() / 1.5;
+    public void sellAnimal(Animal animal) throws NoAnimalFoundException {
+        boolean isTaken = false;
         for(Domain domain: domains) {
-            if (domain.getNameOfDomain().contains(animal.getName())) {
+            if (domain.containsAnimalsLike(animal)) {
                 domain.takeAnimal(animal);
+                isTaken = true;
                 break;
             }
+        }
+        if (isTaken) {
+            balance += animal.getAnimalType() == AnimalType.INSECT ? animal.getPrice() / 2 :
+                            animal.getAnimalType() == AnimalType.MAMMAL ? animal.getPrice() / 1.75 :
+                            animal.getPrice() / 1.5;
+        }
+        else {
+            throw new NoAnimalFoundException("Zoo does not possess this animal");
         }
     }
 

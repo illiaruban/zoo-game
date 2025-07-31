@@ -1,9 +1,7 @@
 package zoogame.domains;
 
 import zoogame.animals.Animal;
-import zoogame.animals.Reptile;
 import zoogame.animals.SizeClass;
-import zoogame.exceptions.InvalidAnimalAddedException;
 
 
 public class ReptileDomain extends Domain {
@@ -18,23 +16,12 @@ public class ReptileDomain extends Domain {
         super(price, sizeClass);
     }
 
-
-
     public void setRumbleTime(boolean isRumbleTime) {
         this.rumbleTime = isRumbleTime;
     }
 
     public boolean isRumbleTime() {
         return rumbleTime;
-    }
-
-    @Override
-    public void addAnimal(Animal animal, boolean check) throws InvalidAnimalAddedException {
-        if (!(animal instanceof Reptile)) {
-            throw new InvalidAnimalAddedException("[EXCEPTION!]Other animals cannot be added to reptile domains.\n" +
-                    "Type of given animal: " + animal.getClass() + ".\n");
-        }
-        super.addAnimal(animal);
     }
 
     /**

@@ -3,7 +3,8 @@ package zoogame.domains;
 import zoogame.animals.Animal;
 import zoogame.animals.Insect;
 import zoogame.animals.SizeClass;
-import zoogame.exceptions.InvalidAnimalAddedException;
+
+import java.util.ArrayList;
 
 public class InsectDomain extends Domain{
     public InsectDomain() {
@@ -14,18 +15,15 @@ public class InsectDomain extends Domain{
         super(price, sizeClass);
     }
 
-    @Override
-    public void addAnimal(Animal animal, boolean check) throws InvalidAnimalAddedException {
-        if (!(animal instanceof Insect)) {
-            throw new InvalidAnimalAddedException("[EXCEPTION!]Other animals cannot be added to insect domains.\n" +
-                    "Type of given animal: " + animal.getClass() + ".\n");
-        }
-        super.addAnimal(animal);
-    }
-
     public void startVanish() {
+        ArrayList<Animal> toRemove = new ArrayList<>();
         for (Animal animal: animals) {
-
+            if (animal instanceof Insect && ((Insect) animal).isVanished()){
+                toRemove.add(animal);
+            }
+        }
+        for (Animal animal: toRemove) {
+            animals.remove(animal);
         }
     }
 

@@ -51,6 +51,7 @@ public abstract class Animal {
         this.timesToFeedPerDay = other.timesToFeedPerDay;
         this.fedPerDay.putAll(other.fedPerDay);
         this.feedForDaysList = new ArrayList<>(other.feedForDaysList);
+        this.lowerQuality = other.lowerQuality;
     }
 
     public String getName() {
@@ -97,7 +98,6 @@ public abstract class Animal {
         return String.format("[%s]\nName: %s\nSize: %s\nPrice: %f\nMax amount in one domain: %d\nTimes to feed per day: %d",
                 animalType, name, sizeClass, price, maxAmountInDomain, timesToFeedPerDay);
     }
-    //TODO: implement toString() in all subclasses
     public void feed(String timeOfDay) {
         fedPerDay.put(timeOfDay, true);
     }
@@ -106,5 +106,5 @@ public abstract class Animal {
 
     public abstract double getIncome();
 
-    //TODO: write end-day function for all animals which checks how well animal has been fed
+    //TODO: write functions that rationalize the feed list and keeps it fit
 }

@@ -27,17 +27,6 @@ public class Insect extends Animal{
     public boolean isVanished() { return vanished; }
 
     public double getIncome(){
-
-        for (Integer quality : feedForDaysList) {
-            if (quality < lowerQuality) {
-                counterToVanish++;
-            }
-        }
-        if (counterToVanish == 2) {
-            vanished = true;
-            return 0.0;
-        }
-        counterToVanish = 0;
         return Math.round(fullIncome * 100.0) / 100.0;
     }
 
