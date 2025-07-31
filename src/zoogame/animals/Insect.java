@@ -15,18 +15,20 @@ public class Insect extends Animal{
 
     @Override
     public int getCounter() {
-        for (Integer quality : feedForDaysList) {
-            if (quality < lowerQuality) {
-                counterToVanish++;
-            }
-        }
-        int counter = counterToVanish;
-        counterToVanish = 0;
-        return counter;
+        return counterToVanish;
     }
     public boolean isVanished() { return vanished; }
 
+    //TODO: improve getIncome() so it does not get into so many loops
+    //idea: just check the todayEatCounter
     public double getIncome(){
+        if (todayEatCounter < lowerQuality) {
+            counterToVanish++;
+        }
+        if (counterToVanish == 2) {
+            vanished = true;
+            return 0.0;
+        }
         return Math.round(fullIncome * 100.0) / 100.0;
     }
 

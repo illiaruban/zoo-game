@@ -29,7 +29,7 @@ public class ReptileDomain extends Domain {
      */
     public void checkOnHabitants() {
         for (Animal animal: animals) {
-            if (animal.getCounter() <= 3) {
+            if (animal.getCounter() <= animal.getLowerQuality()) {
                 rumbleTime = true;
                 break;
             }

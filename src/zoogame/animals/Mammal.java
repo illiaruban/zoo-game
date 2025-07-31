@@ -18,6 +18,11 @@ public class Mammal extends Animal{
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }
 
+    public Mammal(Mammal other) {
+        super(other);
+        this.isAggressive = other.isAggressive;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "Aggressive: " + (isAggressive ? "yes" : "no" + "\n");
@@ -25,15 +30,7 @@ public class Mammal extends Animal{
 
     @Override
     public int getCounter() {
-        for (Integer quality : super.feedForDaysList) {
-            if (quality <= lowerQuality) {
-                if (isAggressive) aggressiveCount++;
-                counterToSubtract++;
-            }
-        }
-        int counter = counterToSubtract;
-        counterToSubtract = 0;
-        return counter;
+        return counterToSubtract;
     }
 
     //if mammal is aggressive and is not fed for 2 days - numbers of customers will decrease
@@ -41,11 +38,9 @@ public class Mammal extends Animal{
     //if mammal is non-aggressive - the income will decrease by 30%
     public double getIncome(){
         double subtractIncome = 0.0;
-        for (Integer quality : super.feedForDaysList) {
-            if (quality <= lowerQuality) {
-                if (isAggressive) aggressiveCount++;
-                counterToSubtract++;
-            }
+        if (todayEatCounter <= lowerQuality) {
+            if (isAggressive) aggressiveCount++;
+            counterToSubtract++;
         }
         if (aggressiveCount == 2 && !Zoo.isDecreaseVisitors()) {
             Zoo.setNumberOfVisitors(Zoo.getNumberOfVisitors() > 50 ? Zoo.getNumberOfVisitors() / 8 : Zoo.getNumberOfVisitors() / 5);

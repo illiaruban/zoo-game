@@ -19,17 +19,13 @@ public class Reptile extends Animal{
 
     @Override
     public int getCounter() {
-        for (Integer quality: feedForDaysList) {
-            if (quality <= lowerQuality) {
-                countToEat++;
-            }
-        }
-        int counter = countToEat;
-        countToEat = 0;
-        return counter;
+        return countToEat;
     }
 
     public double getIncome(){
+        if (todayEatCounter < lowerQuality) {
+            countToEat++;
+        }
         return fullIncome;
     }
 

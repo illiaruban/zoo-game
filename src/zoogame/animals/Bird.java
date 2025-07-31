@@ -3,38 +3,27 @@ public class Bird extends Animal{
     private final double fullIncome = super.price / 4;
     private int counterToSubtract = 0;
     private int counterToAdd = 1;
-    private int maxQuality;
     public Bird(String name, double price) {
         super(name, price);
     }
 
     public Bird(String name, double price, AnimalType animalType, SizeClass weightClass, int maxAmountInDomain, int timesToFeedPerDay) {
         super(name, price, animalType, weightClass, maxAmountInDomain, timesToFeedPerDay);
-        maxQuality = super.timesToFeedPerDay == 3 ? 3 : 2;
-        lowerQuality = maxQuality == 3 ? 2 : 1;
+        lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }
 
     @Override
     public int getCounter() {
-        for (Integer quality : feedForDaysList ) {
-            if (quality <= lowerQuality) {
-                counterToSubtract++;
-            }
-        }
-        int counter = counterToSubtract;
-        counterToSubtract = 0;
-        return counter;
+        return counterToSubtract;
     }
 
     public double getIncome(){
-        for (Integer quality : feedForDaysList ) {
-            if (quality == maxQuality && counterToAdd > 0) {
-                counterToAdd++;
-            }
-            else counterToAdd = 0;
-            if (quality <= lowerQuality) {
-                counterToSubtract++;
-            }
+        if (todayEatCounter == timesToFeedPerDay && counterToAdd > 0) {
+            counterToAdd++;
+        }
+        else counterToAdd = 0;
+        if (todayEatCounter <= lowerQuality) {
+            counterToSubtract++;
         }
         double income;
         if (counterToAdd == 4) {

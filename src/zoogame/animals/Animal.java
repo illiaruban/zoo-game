@@ -20,8 +20,8 @@ public abstract class Animal {
     protected int timesToFeedPerDay = 2;
     protected int lowerQuality;
     protected HashMap<String, Boolean> fedPerDay = new HashMap<>();
+    protected int todayEatCounter = 0;
     //list of integer percentages that contains how good animals have eaten
-    protected ArrayList<Integer> feedForDaysList = new ArrayList<>();
 
 
     public Animal(String name, double price){
@@ -35,9 +35,6 @@ public abstract class Animal {
         this.sizeClass = sizeClass;
         this.maxAmountInDomain = maxAmountInDomain;
         this.timesToFeedPerDay = timesToFeedPerDay;
-        fedPerDay.put("day", false);
-        fedPerDay.put("evening", false);
-        if (timesToFeedPerDay == 3) fedPerDay.put("morning", false);
     }
 
     //copy an object to add to domains, sell them safely etc.
@@ -49,8 +46,6 @@ public abstract class Animal {
         this.sizeClass = other.sizeClass;
         this.maxAmountInDomain = other.maxAmountInDomain;
         this.timesToFeedPerDay = other.timesToFeedPerDay;
-        this.fedPerDay.putAll(other.fedPerDay);
-        this.feedForDaysList = new ArrayList<>(other.feedForDaysList);
         this.lowerQuality = other.lowerQuality;
     }
 
@@ -94,17 +89,23 @@ public abstract class Animal {
 
     public int getLowerQuality() {return lowerQuality;}
 
+    public int getTodayEatCounter() { return todayEatCounter; }
+
     public String toString() {
         return String.format("[%s]\nName: %s\nSize: %s\nPrice: %f\nMax amount in one domain: %d\nTimes to feed per day: %d",
                 animalType, name, sizeClass, price, maxAmountInDomain, timesToFeedPerDay);
     }
     public void feed(String timeOfDay) {
-        fedPerDay.put(timeOfDay, true);
+        todayEatCounter++;
     }
 
     public abstract int getCounter();
 
     public abstract double getIncome();
 
-    //TODO: write functions that rationalize the feed list and keeps it fit
+    //and the algorithm will be, so it firstly calls this function and updates the list
+    // and then every animal gives income based on this
+    public void endDay(int requiredTimePeriod) {
+        todayEatCounter = 0;
+    }
 }
