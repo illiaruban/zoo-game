@@ -74,4 +74,14 @@ public class Domain {
                 animals.getFirst().getName().equals(animal.getName());
     }
 
+    public double closeDay() {
+        if (animals.isEmpty()) return 0.0;
+        double domainIncome = 0.0;
+        for (Animal animal: animals) {
+            domainIncome += animal.getIncome();
+            animal.endDay();
+        }
+        return domainIncome;
+    }
+
 }

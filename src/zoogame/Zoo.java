@@ -17,8 +17,8 @@ public class Zoo {
     private double balance;
     private HashMap<AnimalType, Integer> foodStorage;
 
-    private static boolean decreaseVisitors = false;
-    private static int amountVisitors = 15;
+    private static int decreaseVisitorsCounter = 0;
+    private int amountVisitors = 15;
 
 
     public Zoo() {
@@ -55,14 +55,13 @@ public class Zoo {
 
     public HashMap<AnimalType, Integer> getFoodStorage() {return foodStorage;}
 
-    public static void setNumberOfVisitors(int numberOfVisitors) { amountVisitors = numberOfVisitors; }
+    public void setNumberOfVisitors(int numberOfVisitors) { amountVisitors = numberOfVisitors; }
 
-    public static int getNumberOfVisitors() { return amountVisitors; }
+    public int getNumberOfVisitors() { return amountVisitors; }
 
-    public static void setDecreaseVisitors(boolean decrease) { decreaseVisitors = decrease; }
-
-    public static boolean isDecreaseVisitors() { return decreaseVisitors; }
-
+    public static void incrDecreaseVisitorsCounter() {
+        decreaseVisitorsCounter++;
+    }
 
     //TODO: make conditions in the functions, define exceptions
     public void buyFoodPack(AnimalFoodPack foodPack) {
@@ -149,7 +148,17 @@ public class Zoo {
         }
     }
 
+    //TODO: work on logic of decreasing or increasing the visitors
+    /**
+     * goes through every domain and checks on every animal in it
+     * then decreases the visitors due to counter
+     */
+    public void closeDay() {
+        for (Domain domain: domains) {
+            balance += domain.closeDay();
+        }
 
+    }
 
 
 }

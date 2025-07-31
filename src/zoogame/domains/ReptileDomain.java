@@ -45,5 +45,12 @@ public class ReptileDomain extends Domain {
         animals.subList(newSize, animals.size()).clear();
     }
 
+    public double closeDay() {
+        checkOnHabitants();
+        double domainIncome = super.closeDay();
+        startRumble();
+        return domainIncome;
+    }
+
 
 }

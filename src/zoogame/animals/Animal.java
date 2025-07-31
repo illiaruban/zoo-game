@@ -105,7 +105,7 @@ public abstract class Animal {
 
     //and the algorithm will be, so it firstly calls this function and updates the list
     // and then every animal gives income based on this
-    public void endDay(int requiredTimePeriod) {
+    public void endDay() {
         todayEatCounter = 0;
     }
 }

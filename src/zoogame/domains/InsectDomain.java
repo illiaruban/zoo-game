@@ -27,6 +27,12 @@ public class InsectDomain extends Domain{
         }
     }
 
+    public double closeDay() {
+        double domainIncome = super.closeDay();
+        startVanish();
+        return domainIncome;
+    }
+
 
 
 }
