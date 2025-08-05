@@ -41,6 +41,7 @@ public class ReptileDomain extends Domain {
      */
     public void startRumble() {
         if (animals == null || animals.size() < 3) return;
+        if (!rumbleTime) return;
         int newSize = (int)(animals.size() / 1.5);
         animals.subList(newSize, animals.size()).clear();
     }

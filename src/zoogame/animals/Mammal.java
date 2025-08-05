@@ -5,22 +5,23 @@ import zoogame.Zoo;
 public class Mammal extends Animal{
 
     boolean isAggressive = false;
-    private final double fullIncome = super.price / 1.5;
     private int aggressiveCount = 0;
     private int counterToSubtract = 0;
     public Mammal(String name, double price) {
         super(name, price);
     }
 
-    public Mammal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, boolean isAggressive) {
-        super(name, price, animalType, sizeClass, maxAmountInDomain, timesToFeedPerDay);
+    public Mammal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, boolean isAggressive, double fullIncome) {
+        super(name, price, animalType, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
         this.isAggressive = isAggressive;
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }
 
     public Mammal(Mammal other) {
         super(other);
-        this.isAggressive = other.isAggressive;
+        if (other instanceof Mammal) {
+            this.isAggressive = other.isAggressive;
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import zoogame.domains.ReptileDomain;
 import zoogame.exceptions.LowBalanceException;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NoDomainFoundForAnimalException;
+import java.util.Random;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,9 +64,11 @@ public class Zoo {
         decreaseVisitorsCounter++;
     }
 
-    //TODO: make conditions in the functions, define exceptions
-    public void buyFoodPack(AnimalFoodPack foodPack) {
-        balance -= foodPack.getPrice();
+    public void buyFoodPack(AnimalFoodPack foodPack) throws LowBalanceException {
+        if (balance < foodPack.getPrice())
+        {
+            throw new LowBalanceException("The budget cannot allow to purchase the domain");
+        }
         for (AnimalType type: foodPack.content.keySet()) {
             int currentFoodAmount = foodStorage.get(type);
             foodStorage.put(type, currentFoodAmount + foodPack.content.get(type));
@@ -157,7 +160,41 @@ public class Zoo {
         for (Domain domain: domains) {
             balance += domain.closeDay();
         }
+        Random random = new Random();
+        int lowerLimit = 0;
+        int upperLimit = 0;
+        //generate random number of visitors to add
+        if (decreaseVisitorsCounter == 0) {
+            upperLimit = getUpperLimit("+");
+            lowerLimit = getLowerLimit("+");
+            balance += random.nextInt(lowerLimit, upperLimit);
+        }
+        else {
+            lowerLimit = getLowerLimit("-");
+            upperLimit = getUpperLimit("-");
+            balance -= decreaseVisitorsCounter * random.nextInt(lowerLimit, upperLimit);
+        }
 
+    }
+
+    private int getLowerLimit(String command) {
+        if (command.equals("+")) {
+            return amountVisitors <= 70 ? 10 : amountVisitors <= 135 ? 22 : amountVisitors <= 225 ? 29 : amountVisitors <= 575 ? 45 : 75;
+        }
+        else if (command.equals("-")) {
+            return amountVisitors <= 50 ? 5 : amountVisitors <= 100 ? 7 : amountVisitors <= 200 ? 12 : amountVisitors <= 250 ? 15 : 20;
+        }
+        else return -1;
+    }
+
+    private int getUpperLimit(String command) {
+        if (command.equals("+")) {
+            return amountVisitors <= 65 ? 30 : amountVisitors <= 140 ? 50 : amountVisitors <= 250 ? 80 : amountVisitors <= 575 ? 120 : 190;
+        }
+        else if (command.equals("-")) {
+            return amountVisitors <= 65 ? 10 : amountVisitors <= 120 ? 14 : amountVisitors <= 150 ? 20 : amountVisitors <= 300 ? 37 : 50;
+        }
+        else return -1;
     }
 
 

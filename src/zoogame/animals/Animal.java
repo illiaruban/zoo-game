@@ -21,7 +21,7 @@ public abstract class Animal {
     protected int lowerQuality;
     protected HashMap<String, Boolean> fedPerDay = new HashMap<>();
     protected int todayEatCounter = 0;
-    //list of integer percentages that contains how good animals have eaten
+    protected double fullIncome;
 
 
     public Animal(String name, double price){
@@ -29,16 +29,16 @@ public abstract class Animal {
         this.price = price;
     }
 
-    public Animal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay) {
+    public Animal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
         this(name, price);
         this.animalType = animalType;
         this.sizeClass = sizeClass;
         this.maxAmountInDomain = maxAmountInDomain;
         this.timesToFeedPerDay = timesToFeedPerDay;
+        this.fullIncome = fullIncome;
     }
 
     //copy an object to add to domains, sell them safely etc.
-    //TODO: add copy constructor to other classes
     public Animal(Animal other) {
         this.name = other.name;
         this.price = other.price;
@@ -47,6 +47,7 @@ public abstract class Animal {
         this.maxAmountInDomain = other.maxAmountInDomain;
         this.timesToFeedPerDay = other.timesToFeedPerDay;
         this.lowerQuality = other.lowerQuality;
+        this.fullIncome = other.fullIncome;
     }
 
     public String getName() {
@@ -90,6 +91,10 @@ public abstract class Animal {
     public int getLowerQuality() {return lowerQuality;}
 
     public int getTodayEatCounter() { return todayEatCounter; }
+
+    public void setFullIncome(double fullIncome) { this.fullIncome = fullIncome; }
+
+    public double getFullIncome() { return fullIncome; }
 
     public String toString() {
         return String.format("[%s]\nName: %s\nSize: %s\nPrice: %f\nMax amount in one domain: %d\nTimes to feed per day: %d",

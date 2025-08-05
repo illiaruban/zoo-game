@@ -2,15 +2,22 @@ package zoogame.animals;
 
 public class Insect extends Animal{
     private boolean vanished = false;
-    private final double fullIncome = super.price / 1.5;
     private int counterToVanish = 0;
     public Insect(String name, double price) {
         super(name, price);
     }
 
-    public Insect(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay) {
-        super(name, price, animalType, sizeClass, maxAmountInDomain, timesToFeedPerDay);
+    public Insect(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
+        super(name, price, animalType, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
+    }
+
+    public Insect(Insect other) {
+        super(other);
+        if (other instanceof Insect) {
+            this.vanished = other.vanished;
+            this.counterToVanish = other.counterToVanish;
+        }
     }
 
     @Override
@@ -19,7 +26,6 @@ public class Insect extends Animal{
     }
     public boolean isVanished() { return vanished; }
 
-    //TODO: improve getIncome() so it does not get into so many loops
     //idea: just check the todayEatCounter
     public double getIncome(){
         if (todayEatCounter < lowerQuality) {

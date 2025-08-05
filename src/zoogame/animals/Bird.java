@@ -1,15 +1,18 @@
 package zoogame.animals;
 public class Bird extends Animal{
-    private final double fullIncome = super.price / 4;
     private int counterToSubtract = 0;
     private int counterToAdd = 1;
     public Bird(String name, double price) {
         super(name, price);
     }
 
-    public Bird(String name, double price, AnimalType animalType, SizeClass weightClass, int maxAmountInDomain, int timesToFeedPerDay) {
-        super(name, price, animalType, weightClass, maxAmountInDomain, timesToFeedPerDay);
+    public Bird(String name, double price, AnimalType animalType, SizeClass weightClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
+        super(name, price, animalType, weightClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
+    }
+
+    public Bird(Bird other) {
+        super(other);
     }
 
     @Override
