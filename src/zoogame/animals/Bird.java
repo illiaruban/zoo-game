@@ -28,16 +28,16 @@ public class Bird extends Animal{
         if (todayEatCounter <= lowerQuality) {
             counterToSubtract++;
         }
-        double income;
+        double coefficient;
         if (counterToAdd == 4) {
-            income = fullIncome + fullIncome / 8;
+            coefficient = 1.25;
         } else if (counterToSubtract == 2) {
-            income = fullIncome - fullIncome / 4;
+            coefficient = 0.5;
         } else {
-            income = fullIncome;
+            coefficient = 1.0;
         }
         counterToAdd = 1;
         counterToSubtract = 0;
-        return Math.round(income * 100.0) / 100.0;
+        return coefficient;
     }
 }

@@ -151,15 +151,18 @@ public class Zoo {
         }
     }
 
-    //TODO: work on logic of decreasing or increasing the visitors
     /**
-     * goes through every domain and checks on every animal in it
+     * goes through every domain and checks on every animal in it, gathers coefficients in a sum
+     * calculates new balance by multiplying amount of visitors by coefficient
      * then decreases the visitors due to counter
+     *
      */
     public void closeDay() {
+        double todayCoefficient = 0.0;
         for (Domain domain: domains) {
-            balance += domain.closeDay();
+            todayCoefficient += domain.closeDay();
         }
+        balance += amountVisitors * todayCoefficient;
         Random random = new Random();
         int lowerLimit = 0;
         int upperLimit = 0;
@@ -167,19 +170,15 @@ public class Zoo {
         if (decreaseVisitorsCounter == 0) {
             upperLimit = getUpperLimit("+");
             lowerLimit = getLowerLimit("+");
-            balance += random.nextInt(lowerLimit, upperLimit);
+            amountVisitors += random.nextInt(lowerLimit, upperLimit);
         }
         else {
             lowerLimit = getLowerLimit("-");
             upperLimit = getUpperLimit("-");
-            balance -= decreaseVisitorsCounter * random.nextInt(lowerLimit, upperLimit);
+            amountVisitors -= random.nextInt(lowerLimit, upperLimit) * decreaseVisitorsCounter;
         }
 
     }
-
-    //TODO: rework the end-day functions for animals so that amount of visitors matter
-    //possible idea - let animals add coefficients: 1, 0.75, 0.5, 0.25, 0.0
-    //then add them and multiply by amount of visitors
     private int getLowerLimit(String command) {
         if (command.equals("+")) {
             return amountVisitors <= 70 ? 10 : amountVisitors <= 135 ? 22 : amountVisitors <= 225 ? 29 : amountVisitors <= 575 ? 45 : 75;

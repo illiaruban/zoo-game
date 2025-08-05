@@ -35,7 +35,7 @@ public class Insect extends Animal{
             vanished = true;
             return 0.0;
         }
-        return Math.round(fullIncome * 100.0) / 100.0;
+        return 1.0;
     }
 
 }

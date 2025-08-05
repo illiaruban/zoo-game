@@ -40,25 +40,25 @@ public class Mammal extends Animal{
 
     //get a way to decrease the amount of visitors
     public double getIncome(){
-        double subtractIncome = 0.0;
+        double coefficient = 1.0;
         if (todayEatCounter <= lowerQuality) {
             if (isAggressive) aggressiveCount++;
             counterToSubtract++;
         }
         if (aggressiveCount == 2) {
             Zoo.incrDecreaseVisitorsCounter();
-            subtractIncome = fullIncome * 0.1;
+            coefficient = 0.25;
             aggressiveCount--;
         }
         else if (counterToSubtract == 2) {
             Zoo.incrDecreaseVisitorsCounter();
-            subtractIncome = fullIncome * 0.3;
+            coefficient = 0.5;
             counterToSubtract--;
         }
         else if (todayEatCounter == timesToFeedPerDay) {
             aggressiveCount = 0;
             counterToSubtract = 0;
         }
-        return fullIncome - subtractIncome;
+        return coefficient;
     }
 }
