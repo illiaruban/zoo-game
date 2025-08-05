@@ -8,7 +8,7 @@ public class Domain {
     protected String nameOfDomain;
     protected ArrayList<Animal> animals = new ArrayList<>();
     protected SizeClass sizeClass = SizeClass.TINY;
-    protected double price;
+    protected double price = 1000;
 
     public Domain() {
         nameOfDomain = "Empty domain";

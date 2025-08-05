@@ -177,6 +177,9 @@ public class Zoo {
 
     }
 
+    //TODO: rework the end-day functions for animals so that amount of visitors matter
+    //possible idea - let animals add coefficients: 1, 0.75, 0.5, 0.25, 0.0
+    //then add them and multiply by amount of visitors
     private int getLowerLimit(String command) {
         if (command.equals("+")) {
             return amountVisitors <= 70 ? 10 : amountVisitors <= 135 ? 22 : amountVisitors <= 225 ? 29 : amountVisitors <= 575 ? 45 : 75;
