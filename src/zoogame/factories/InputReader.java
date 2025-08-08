@@ -4,8 +4,8 @@ import zoogame.animals.SizeClass;
 
 import java.util.Scanner;
 
-public class Factory {
-    protected static String readAnimalType(Scanner scanner) {
+public class InputReader {
+    public static String readAnimalType(Scanner scanner) {
         String animalType;
         while (true) {
             System.out.print("Type of animal: ");
@@ -21,12 +21,12 @@ public class Factory {
             }
         }
     }
-    protected static String readString(Scanner scanner, String prompt) {
+    public static String readString(Scanner scanner, String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
     }
 
-    protected static double readPositiveDouble(Scanner scanner, String prompt) {
+    public static double readPositiveDouble(Scanner scanner, String prompt) {
         double value;
         while (true) {
             System.out.print(prompt);
@@ -40,7 +40,7 @@ public class Factory {
         return value;
     }
 
-    protected static int readPositiveInt(Scanner scanner, String prompt) {
+    public static int readPositiveInt(Scanner scanner, String prompt) {
         int value;
         while (true) {
             System.out.print(prompt);
@@ -54,7 +54,7 @@ public class Factory {
         return value;
     }
 
-    protected static boolean readBoolean(Scanner scanner, String prompt) {
+    public static boolean readBoolean(Scanner scanner, String prompt) {
         boolean result = false;
         while (true) {
             System.out.print(prompt);
@@ -72,7 +72,7 @@ public class Factory {
         return result;
     }
 
-    protected static SizeClass readSizeClass(Scanner scanner) {
+    public static SizeClass readSizeClass(Scanner scanner) {
         String sizeInput;
         while (true) {
             System.out.print("Size class: ");

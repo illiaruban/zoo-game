@@ -4,15 +4,14 @@ import zoogame.animals.*;
 
 import java.util.Scanner;
 
-public class AnimalFactory extends Factory{
+import zoogame.factories.InputReader.*;
 
-    /**
-     * creates a new animal and returns it to admin class
-     * @param scanner
-     * @return
-     */
+import static zoogame.factories.InputReader.*;
+
+
+public class AnimalFactory {
+
     public static Animal createNewAnimal(Scanner scanner) {
-        Animal animal = null;
         String name = readString(scanner, "Enter name: ");
         double price = readPositiveDouble(scanner, "Price: ");
         SizeClass sizeClass = readSizeClass(scanner);
@@ -21,25 +20,19 @@ public class AnimalFactory extends Factory{
         double fullIncome = readPositiveDouble(scanner, "Full income this animal brings: ");
 
         String animalType = readAnimalType(scanner);
+
         switch (animalType) {
             case "bird":
-                animal = new Bird(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
-                break;
+                return new Bird(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
             case "insect":
-                animal = new Insect(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
-                break;
+                return new Insect(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
             case "mammal":
                 boolean isAggressive = readBoolean(scanner, "Is animal aggressive?[yes/no]: ");
-                animal = new Mammal(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, isAggressive, fullIncome);
-                break;
+                return new Mammal(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, isAggressive, fullIncome);
             case "reptile":
-                animal = new Reptile(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
-                break;
+                return new Reptile(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
             default:
-                animal = null;
+                throw new IllegalArgumentException("Unknown animal type");
         }
-        return animal;
     }
-
-
 }
