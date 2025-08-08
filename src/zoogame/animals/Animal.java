@@ -29,9 +29,8 @@ public abstract class Animal {
         this.price = price;
     }
 
-    public Animal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
+    public Animal(String name, double price, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
         this(name, price);
-        this.animalType = animalType;
         this.sizeClass = sizeClass;
         this.maxAmountInDomain = maxAmountInDomain;
         this.timesToFeedPerDay = timesToFeedPerDay;

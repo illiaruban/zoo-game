@@ -2,12 +2,14 @@ package zoogame.animals;
 public class Bird extends Animal{
     private int counterToSubtract = 0;
     private int counterToAdd = 1;
+
+    private AnimalType animalType = AnimalType.BIRD;
     public Bird(String name, double price) {
         super(name, price);
     }
 
-    public Bird(String name, double price, AnimalType animalType, SizeClass weightClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
-        super(name, price, animalType, weightClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
+    public Bird(String name, double price, SizeClass weightClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
+        super(name, price, weightClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }
 

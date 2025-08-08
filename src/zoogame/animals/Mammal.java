@@ -7,12 +7,14 @@ public class Mammal extends Animal{
     boolean isAggressive = false;
     private int aggressiveCount = 0;
     private int counterToSubtract = 0;
+
+    private AnimalType animalType = AnimalType.MAMMAL;
     public Mammal(String name, double price) {
         super(name, price);
     }
 
-    public Mammal(String name, double price, AnimalType animalType, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, boolean isAggressive, double fullIncome) {
-        super(name, price, animalType, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
+    public Mammal(String name, double price, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, boolean isAggressive, double fullIncome) {
+        super(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome);
         this.isAggressive = isAggressive;
         lowerQuality = timesToFeedPerDay == 3 ? 2 : 1;
     }

@@ -3,6 +3,8 @@ package zoogame.users;
 import zoogame.Shop;
 import java.util.Scanner;
 import zoogame.Zoo;
+import zoogame.factories.AnimalFactory;
+import zoogame.animals.Animal;
 
 public class Admin {
     private Zoo admin_zoo = new Zoo();
@@ -18,12 +20,16 @@ public class Admin {
             switch(command) {
                 case 1:
                     //adds an animal
+                    Animal animal = AnimalFactory.createNewAnimal(scanner);
+                    admin_shop.addAnimal(animal);
                     break;
                 case 2:
-                    //edits an animal
+                    //delete an animal from the shop
+
                     break;
                 case 3:
                     //adds a food pack
+
                     break;
                     //then edit a food pack and so on...
 
@@ -32,4 +38,5 @@ public class Admin {
         }
 
     }
+
 }
