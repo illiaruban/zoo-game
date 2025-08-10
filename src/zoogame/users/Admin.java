@@ -3,8 +3,6 @@ package zoogame.users;
 import zoogame.Shop;
 import java.util.Scanner;
 import zoogame.Zoo;
-import zoogame.factories.AnimalFactory;
-import zoogame.animals.Animal;
 
 public class Admin {
     private Zoo admin_zoo = new Zoo();
@@ -20,8 +18,7 @@ public class Admin {
             switch(command) {
                 case 1:
                     //adds an animal
-                    Animal animal = AnimalFactory.createNewAnimal(scanner);
-                    admin_shop.addAnimal(animal);
+                    //TODO: create a separate function here for entering info about animal which is backed up be input reader and catches exceptions from it
                     break;
                 case 2:
                     //delete an animal from the shop
