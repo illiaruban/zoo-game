@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class InputReader {
     public static double readPrice(Scanner scanner) throws InvalidAnimalParameterException{
         double value = scanner.nextDouble();
+        scanner.nextLine();
         if (value < 100.0 || value > 10_000_000) {
             throw new InvalidAnimalParameterException("Invalid parameter: price\n>Only values in range [100, 1,000,000] allowed");
         }
@@ -17,6 +18,7 @@ public class InputReader {
 
     public static double readIncome(Scanner scanner, double price) throws InvalidAnimalParameterException{
         double value = scanner.nextDouble();
+        scanner.nextLine();
         if (value < 100.0 || value > 1_000_000 && value > price) {
             throw new InvalidAnimalParameterException("Invalid parameter: income\n>Only values in range [100, 1,000,000] allowed\n" +
                     ">Income of animal cannot be higher that its price");
@@ -26,17 +28,18 @@ public class InputReader {
 
     public static int readPositiveInteger(Scanner scanner, String whatFor) throws InvalidAnimalParameterException{
         int value = scanner.nextInt();
-        if (whatFor.equals("in_domain") && value < 0 || value > 100) {
+        scanner.nextLine();
+        if (whatFor.equals("in_domain") && (value < 0 || value > 100)) {
             throw new InvalidAnimalParameterException("Invalid parameter: amount in domain\n>Only values in range [1, 100] allowed");
         }
-        else if (whatFor.equals("feed") && value < 2 || value > 3) {
+        else if (whatFor.equals("feed") && (value < 2 || value > 3)) {
             throw new InvalidAnimalParameterException("Invalid parameter: times to feed\n>Only values in range [2, 3] allowed");
         }
         return value;
     }
 
     public static AnimalType readAnimalType(Scanner scanner) throws InvalidAnimalParameterException {
-        String value = scanner.nextLine();
+        String value = scanner.nextLine().toLowerCase();
         AnimalType animalType;
         switch(value) {
             case "bird":
@@ -66,7 +69,7 @@ public class InputReader {
     }
 
     public static SizeClass readSizeClass(Scanner scanner) throws InvalidAnimalParameterException{
-        String value = scanner.nextLine();
+        String value = scanner.nextLine().toLowerCase();
         SizeClass sizeClass;
         switch(value) {
             case "tiny":
@@ -90,10 +93,10 @@ public class InputReader {
     public static boolean readBoolean(Scanner scanner, String whatFor) throws InvalidAnimalParameterException {
         String value = scanner.nextLine();
         boolean boolValue;
-        if (value.equals("yes")){
+        if (value.equalsIgnoreCase("yes")){
             boolValue = true;
         }
-        else if (value.equals("no")) {
+        else if (value.equalsIgnoreCase("no")) {
             boolValue = false;
         }
         else {

@@ -96,7 +96,7 @@ public abstract class Animal {
     public double getFullIncome() { return fullIncome; }
 
     public String toString() {
-        return String.format("[%s]\nName: %s\nSize: %s\nPrice: %f\nMax amount in one domain: %d\nTimes to feed per day: %d",
+        return String.format("[%s]\nName: %s\nSize: %s\nPrice: %.2f\nMax amount in one domain: %d\nTimes to feed per day: %d\n",
                 animalType, name, sizeClass, price, maxAmountInDomain, timesToFeedPerDay);
     }
     public void feed(String timeOfDay) {

@@ -30,5 +30,19 @@ public class Shop {
         availableDomains.add(domain);
     }
 
+    public void printAnimals() {
+        int counter = 1;
+        for (Animal animal: availableAnimals) {
+            System.out.print(counter + ".");
+            System.out.println(animal.toString());
+        }
+    }
+
+    public int getAnimalsAmount() { return availableAnimals.size(); }
+
+    public void deleteAnimal(int index) {
+        availableAnimals.remove(index);
+    }
+
 
 }

@@ -23,6 +23,7 @@ public class AnimalFactory {
             case AnimalType.MAMMAL -> {
                 while(true) {
                     try {
+                        System.out.print("Is animal aggressive[yes/no]: ");
                         boolean isAggressive = InputReader.readBoolean(scanner, "aggressiveness");
                         return new Mammal(name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, isAggressive, fullIncome);
                     }
@@ -30,9 +31,9 @@ public class AnimalFactory {
                         System.out.println(e.getMessage());
                         while(true) {
                             System.out.print("Do you want to retry?[y/n]: ");
-                            String input = scanner.nextLine();
-                            if (input.equals("y")) continue;
-                            else if (input.equals("n")) break;
+                            String input = scanner.nextLine().toLowerCase();
+                            if (input.equals("y")) break;
+                            else if (input.equals("n")) return null;
                             else System.out.println("Input incorrect, try again.");
                         }
                     }
