@@ -10,6 +10,7 @@ import zoogame.InputReader;
 import zoogame.animals.Animal;
 import zoogame.animals.AnimalType;
 import zoogame.animals.SizeClass;
+import zoogame.domains.Domain;
 import zoogame.exceptions.InvalidAnimalParameterException;
 import zoogame.factories.AnimalFactory;
 
@@ -30,7 +31,7 @@ public class Admin {
                     break;
                 case 2:
                     //delete an animal from the shop
-
+                    deleteAnimal(scanner);
                     break;
                 case 3:
                     //prints the animals list of the shop
@@ -38,80 +39,174 @@ public class Admin {
                     printAnimalList();
                     break;
                     //then edit a food pack and so on...
+                case 4:
+                    //print all domains
+                    System.out.println("Domains in the shop:");
+                    printDomainList();
+                    break;
+                case 5:
+                    //edit price in domain
+                    editDomainPrice(scanner);
+                    break;
+                case 6:
+                    //edit animal name, price, fullIncome
+
 
             }
         }
 
     }
-
+    //------------------------------------------------------------------[ADD NEW ANIMAL TO THE SHOP]
     public void addNewAnimal(Scanner scanner) {
-        Animal animal;
-        while(true) {
+        while (true) {
             try {
-                System.out.print("Enter name: ");
-                String name = InputReader.readName(scanner);
-                System.out.print("Enter price: ");
-                double price = InputReader.readPrice(scanner);
-                System.out.print("Enter full income: ");
-                double fullIncome = InputReader.readIncome(scanner, price);
-                System.out.print("Enter times animal must be fed per pay: ");
-                int timesToFeedPerDay = InputReader.readPositiveInteger(scanner, "feed");
-                System.out.print("Enter maximum amount of these animals in one domain: ");
-                int maxAmountInDomain = InputReader.readPositiveInteger(scanner, "in_domain");
-                System.out.print("Enter animal type: ");
-                AnimalType animalType = InputReader.readAnimalType(scanner);
-                System.out.print("Enter size class: ");
-                SizeClass sizeClass = InputReader.readSizeClass(scanner);
-
-                animal = AnimalFactory.createNewAnimal(scanner, name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome, animalType);
-                break;
-            }
-            catch(InvalidAnimalParameterException | InputMismatchException e) {
+                Animal animal = collectAnimalData(scanner);
+                admin_shop.addAnimal(animal);
+                System.out.println("Animal added successfully");
+                return;
+            } catch (InvalidAnimalParameterException | InputMismatchException e) {
                 System.out.println(e.getMessage());
-                while(true) {
-                    System.out.print("Do you want to retry?[y/n]: ");
-                    String input = scanner.nextLine();
-                    if (input.equals("y")) break;
-                    else if (input.equals("n")) return;
-                    else System.out.println("Input incorrect, try again.");
+                if (!wantsToRetry(scanner)) {
+                    return;
                 }
             }
         }
-        if (animal != null) {
-            admin_shop.addAnimal(animal);
-            System.out.println("Animal added successfully");
+    }
+
+    /**
+     * Collects all fields required to create Animal.
+     */
+    private Animal collectAnimalData(Scanner scanner) throws InvalidAnimalParameterException {
+        System.out.print("Enter name: ");
+        String name = InputReader.readName(scanner, "animal name");
+
+        System.out.print("Enter price: ");
+        double price = InputReader.readPrice(scanner);
+
+        System.out.print("Enter full income: ");
+        double fullIncome = InputReader.readIncome(scanner, price);
+
+        System.out.print("Enter times animal must be fed per pay: ");
+        int timesToFeedPerDay = InputReader.readPositiveInteger(scanner, "feed");
+
+        System.out.print("Enter maximum amount of these animals in one domain: ");
+        int maxAmountInDomain = InputReader.readPositiveInteger(scanner, "in_domain");
+
+        System.out.print("Enter animal type: ");
+        AnimalType animalType = InputReader.readAnimalType(scanner);
+
+        System.out.print("Enter size class: ");
+        SizeClass sizeClass = InputReader.readSizeClass(scanner);
+
+        return AnimalFactory.createNewAnimal(scanner, name, price, sizeClass, maxAmountInDomain, timesToFeedPerDay, fullIncome, animalType);
+    }
+
+    /**
+     * Asks user if they want to retry after exception.
+     */
+    private boolean wantsToRetry(Scanner scanner) {
+        while (true) {
+            System.out.print("Do you want to retry?[y/n]: ");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("y")) return true;
+            if (input.equalsIgnoreCase("n")) return false;
+            System.out.println("Input incorrect, try again.");
         }
     }
 
+    //------------------------------------------------------------------[DELETE ANIMAL FROM SHOP]
     public void deleteAnimal(Scanner scanner) {
         printAnimalList();
-        int animalsAmount = admin_shop.getAnimalsAmount();
-        if (animalsAmount == 0) {
+        int amount = admin_shop.getAnimalsAmount();
+        if (amount == 0) {
             System.out.println("There are no animals in the shop yet.\n");
             return;
         }
-        System.out.print("Enter number of animal in the list to delete it: ");
         while (true) {
+            System.out.print("Enter number of animal in the list to delete it: ");
             int index = scanner.nextInt() - 1;
             scanner.nextLine();
-            if (index < 0 || index >= animalsAmount) {
-                while(true) {
-                    System.out.println("There is no animal under this number.");
-                    System.out.print("Do you want to retry?[y/n]: ");
-                    String input = scanner.nextLine();
-                    if (input.equals("y")) break;
-                    else if (input.equals("n")) return;
-                    else System.out.println("Input incorrect, try again.");
+
+            if (index < 0 || index >= amount) {
+                System.out.println("Invalid index.");
+                if (!wantsToRetry(scanner)) return;
+                continue;
+            }
+            Animal animal = admin_shop.getAvailableAnimals().get(index);
+
+            boolean success = deleteAnimalByIndex(animal);
+            if (success) {
+                System.out.println("Animal deleted successfully.\n");
+                return;
+            } else {
+                System.out.println("There is no animal under this number.");
+                if (!wantsToRetry(scanner)) {
+                    return;
                 }
             }
-            admin_shop.deleteAnimal(index);
-            System.out.println("Animal deleted successfully.\n");
-            break;
         }
     }
 
+    public boolean deleteAnimalByIndex(Animal animal) {
+        if (animal == null) {
+            return false;
+        }
+        admin_shop.deleteAnimal(animal);
+        return true;
+    }
+
+    //------------------------------------------------------------------[PRINT]
     public void printAnimalList() {
         admin_shop.printAnimals();
     }
+
+    public void printDomainList() {
+        admin_shop.printDomains();
+    }
+    //------------------------------------------------------------------[CHANGE DOMAIN PRICE]
+    public void editDomainPrice(Scanner scanner) {
+        printDomainList();
+        int amount = admin_shop.getDomainsAmount();
+        if (amount == 0) {
+            System.out.println("Operation is not functioning properly: there is no domains.");
+            return;
+        }
+        while (true) {
+            System.out.print("Enter number of domain to change its price: ");
+            int selectedIndex = scanner.nextInt() - 1;
+            scanner.nextLine();
+
+            if (selectedIndex < 0 || selectedIndex >= amount) {
+                System.out.println("Invalid index.");
+                if (!wantsToRetry(scanner)) return;
+                continue;
+            }
+
+            Domain domain = admin_shop.getAvailableDomains().get(selectedIndex);
+
+            System.out.print("Enter new price: ");
+            double price = scanner.nextDouble();
+            scanner.nextLine();
+
+            boolean success = changeDomainPrice(domain, price);
+            if (success) {
+                System.out.println("Price edited successfully!");
+                return;
+            } else {
+                System.out.println("Could not change price.");
+            }
+        }
+    }
+
+    public boolean changeDomainPrice(Domain domain, double price) {
+        if (domain == null) {
+            return false;
+        }
+        else {
+            domain.setPrice(price);
+            return true;
+        }
+    }
+
 
 }

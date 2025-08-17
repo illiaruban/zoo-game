@@ -60,10 +60,10 @@ public class InputReader {
         return animalType;
     }
 
-    public static String readName(Scanner scanner) throws InvalidAnimalParameterException{
+    public static String readName(Scanner scanner, String whatFor) throws InvalidAnimalParameterException{
         String name = scanner.nextLine();
         if (!name.matches("^[A-Za-z\s]+$")) {
-            throw new InvalidAnimalParameterException("Invalid parameter: name\n>Only letters and spaces allowed");
+            throw new InvalidAnimalParameterException("Invalid parameter: " + whatFor + "\n>Only letters and spaces allowed");
         }
         return name;
     }

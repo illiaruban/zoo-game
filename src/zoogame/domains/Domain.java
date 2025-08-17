@@ -52,15 +52,18 @@ public class Domain {
 
     //toString method for the shop
     //toString method for the zoo
+
     public String toString(String command) {
-        String string = "";
+        //TODO: also check if there are animals in domain and change output accordingly
+        String string = this instanceof InsectDomain ? "[Insect Domain]" : this instanceof ReptileDomain ? "[Reptile Domain]" : "[Regular Domain]";
+        string += "\n";
         if (command.equals("zooview")) {
-            string += nameOfDomain + "contains " + animals.size() + " " + animals.get(0).getName() + "\n";
-            string += "The size class of domain is " + sizeClass + "\n";
-            string += "Domain can contain " + (animals.get(0).getMaxAmountInDomain() - animals.size()) + "animals more\n";
+            string += String.format("Size class: %s\n", sizeClass);
+            string += String.format("%s contains %d %s\n", nameOfDomain, animals.size(), animals.get(0).getName());
+            string += String.format("Domain can contain %d animals more\n", (animals.get(0).getMaxAmountInDomain() - animals.size()));
         }
         else if (command.equals("shopview")) {
-            string += String.format("%s domain\nPrice: %f\n", sizeClass, price);
+            string += String.format("Size class: %s\nPrice: %f\n", sizeClass, price);
         }
         else {
             string += "Invalid command\n";
