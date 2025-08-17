@@ -17,40 +17,74 @@ import zoogame.factories.AnimalFactory;
 public class Admin {
     private Shop admin_shop = new Shop();
 
+    public Admin() {}
+    public Admin(Shop admin_shop) {
+        this.admin_shop = admin_shop;
+    }
+
     public void manageGame() {
-        System.out.println("Welcome as admin");
+        System.out.println("Welcome, Admin!");
         Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
         while(true) {
-            System.out.println("Enter command to execute");
+            System.out.println("Enter command to execute:\n" +
+                    "1 - add new animal to the shop\n" +
+                    "2 - delete an animal from the shop\n" +
+                    "3 - print all animals in the shop\n" +
+                    "4 - edit domain's price\n" +
+                    "5 - print all domains\n" +
+                    "6 - change animal info\n" +
+                    "0 - exit");
             System.out.print("> ");
             int command = scanner.nextInt();
+            scanner.nextLine();
             switch(command) {
                 case 1:
+                    System.out.println("----------------[ADD NEW ANIMAL]-----------------");
                     //adds an animal
                     addNewAnimal(scanner);
+                    System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 2:
+                    System.out.println("----------------[DELETE ANIMAL]-----------------");
                     //delete an animal from the shop
                     deleteAnimal(scanner);
+                    System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 3:
+                    System.out.println("----------------[PRINT ANIMALS]-----------------");
                     //prints the animals list of the shop
                     System.out.println("Animals added in the shop:");
                     printAnimalList();
+                    System.out.println("----------------[FINISH]-----------------");
                     break;
                     //then edit a food pack and so on...
                 case 4:
+                    System.out.println("----------------[CHANGE DOMAIN PRICE]-----------------");
                     //print all domains
-                    System.out.println("Domains in the shop:");
-                    printDomainList();
+                    editDomainPrice(scanner);
+                    System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 5:
+                    System.out.println("----------------[PRINT DOMAINS]-----------------");
                     //edit price in domain
-                    editDomainPrice(scanner);
+                    System.out.println("Domains in the shop:");
+                    printDomainList();
+                    System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 6:
+                    System.out.println("----------------[CHANGE ANIMAL INFO]-----------------");
                     //edit animal name, price, fullIncome
-
+                    editAnimal(scanner);
+                    System.out.println("----------------[FINISH]-----------------");
+                    break;
+                case 7:
+                    System.out.println("Logging out as admin.");
+                    return;
+                default:
+                    System.out.println("Incorrect command.");
+                    if (!wantsToRetry(scanner)) {
+                        return;
+                    }
 
             }
         }
@@ -205,6 +239,83 @@ public class Admin {
         else {
             domain.setPrice(price);
             return true;
+        }
+    }
+    //------------------------------------------------------------------[CHANGE ANIMAL INFO]
+
+    public void editAnimal(Scanner scanner) {
+        printAnimalList(); // show animals with numbers
+
+        int amount = admin_shop.getAnimalsAmount();
+        if (amount == 0) {
+            System.out.println("There are no animals in the shop.");
+            return;
+        }
+
+        while (true) {
+            System.out.print("Enter number of animal to edit: ");
+            int index = scanner.nextInt() - 1;
+            scanner.nextLine();
+
+            if (index < 0 || index >= amount) {
+                System.out.println("Invalid index.");
+                if (!wantsToRetry(scanner)) return;
+                continue;
+            }
+
+            Animal animal = admin_shop.getAvailableAnimals().get(index);
+            changeAnimalInfo(scanner, animal);
+            return;
+        }
+    }
+
+    public void changeAnimalInfo(Scanner scanner, Animal animal) {
+        while (true) {
+            System.out.print("Enter parameter to change [name/price/full_income/amount_domain/amount_feed]: ");
+            String parameter = scanner.nextLine();
+
+            try {
+                switch (parameter) {
+                    case "name" -> {
+                        String newName = InputReader.readName(scanner, "animal name");
+                        animal.setName(newName);
+                        System.out.println("Name updated successfully.");
+                        return;
+                    }
+                    case "price" -> {
+                        double newPrice = InputReader.readPrice(scanner);
+                        animal.setPrice(newPrice);
+                        System.out.println("Price updated successfully.");
+                        return;
+                    }
+                    case "full_income" -> {
+                        double newIncome = InputReader.readIncome(scanner, animal.getPrice());
+                        animal.setFullIncome(newIncome);
+                        System.out.println("Full income updated successfully.");
+                        return;
+                    }
+                    case "amount_domain" -> {
+                        int maxInDomain = InputReader.readPositiveInteger(scanner, "in_domain");
+                        animal.setMaxAmountInDomain(maxInDomain);
+                        System.out.println("Max domain amount updated.");
+                        return;
+                    }
+                    case "amount_feed" -> {
+                        int feed = InputReader.readPositiveInteger(scanner, "feed");
+                        animal.setTimesToFeedPerDay(feed);
+                        System.out.println("Feed times updated.");
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Incorrect parameter.");
+                        if (!wantsToRetry(scanner)) return;
+                    }
+                }
+            }
+            catch (InvalidAnimalParameterException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) return;
+            }
         }
     }
 
