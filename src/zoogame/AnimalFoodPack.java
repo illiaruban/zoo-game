@@ -22,6 +22,12 @@ public class AnimalFoodPack {
         this.price = price;
     }
 
+    public AnimalFoodPack(AnimalFoodPack other) {
+        this.nameOfPack = other.nameOfPack;
+        this.content = new HashMap<>(other.content);
+        this.price = other.price;
+    }
+
     public void addFood(AnimalType type, int amount){
         content.put(type, amount);
     }

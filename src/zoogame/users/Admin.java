@@ -77,8 +77,9 @@ public class Admin {
                     editAnimal(scanner);
                     System.out.println("----------------[FINISH]-----------------");
                     break;
-                case 7:
+                case 0:
                     System.out.println("Logging out as admin.");
+
                     return;
                 default:
                     System.out.println("Incorrect command.");
@@ -317,6 +318,21 @@ public class Admin {
                 if (!wantsToRetry(scanner)) return;
             }
         }
+    }
+
+    /**
+     * downloads information about the shop at the start of the function(only first time the user enters admin mode on the session)
+     */
+    public void loadData() {
+
+    }
+
+    /**
+     * saves updated(or not) information about the shop(every time the function exits and there is a change)
+     */
+
+    public void updateData() {
+
     }
 
 

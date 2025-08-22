@@ -1,6 +1,7 @@
 package zoogame.domains;
 
 import zoogame.animals.*;
+import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,14 @@ public class Domain {
         this.sizeClass = sizeClass;
     }
 
-    public Domain(Domain other) {
+    public Domain(Domain otherDomain) {
         this();
-        this.price = other.price;
-        this.sizeClass = other.sizeClass;
+        this.price = otherDomain.price;
+        this.sizeClass = otherDomain.sizeClass;
+        for (Animal otherAnimal: otherDomain.animals) {
+            Animal newAnimal = AnimalFactory.createNewAnimalWithCopy(otherAnimal);
+            animals.add(newAnimal);
+        }
     }
 
     public int getCurrentAmountOfAnimals() {
@@ -37,6 +42,9 @@ public class Domain {
 
     public void takeAnimal(Animal animal) {
         animals.remove(animal);
+        if (animals.size() == 0) {
+            nameOfDomain = "Empty domain";
+        }
     }
 
     public String getNameOfDomain() {
@@ -54,13 +62,18 @@ public class Domain {
     //toString method for the zoo
 
     public String toString(String command) {
-        //TODO: also check if there are animals in domain and change output accordingly
+
         String string = this instanceof InsectDomain ? "[Insect Domain]" : this instanceof ReptileDomain ? "[Reptile Domain]" : "[Regular Domain]";
         string += "\n";
         if (command.equals("zooview")) {
             string += String.format("Size class: %s\n", sizeClass);
-            string += String.format("%s contains %d %s\n", nameOfDomain, animals.size(), animals.get(0).getName());
-            string += String.format("Domain can contain %d animals more\n", (animals.get(0).getMaxAmountInDomain() - animals.size()));
+            if (animals.size() == 0) {
+                string += "Contains no animals\n";
+            }
+            else {
+                string += String.format("%s contains %d %s\n", nameOfDomain, animals.size(), animals.get(0).getName());
+                string += String.format("Domain can contain %d animals more\n", (animals.get(0).getMaxAmountInDomain() - animals.size()));
+            }
         }
         else if (command.equals("shopview")) {
             string += String.format("Size class: %s\nPrice: %f\n", sizeClass, price);

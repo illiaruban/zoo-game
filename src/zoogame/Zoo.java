@@ -23,9 +23,19 @@ public class Zoo {
 
 
     public Zoo() {
-        balance = 1000;
+        balance = 20000;
         foodStorage = new HashMap<>();
     };
+
+    public Zoo(Zoo other) {
+        this.balance = other.balance;
+        for (Domain domain: other.domains) {
+            Domain newDomain = new Domain(domain);
+            domains.add(newDomain);
+        }
+        this.amountVisitors = other.amountVisitors;
+        foodStorage = new HashMap<>(other.foodStorage);
+    }
 
     public void setOpened(boolean isOpened) {
         this.isOpened = isOpened;
@@ -89,6 +99,15 @@ public class Zoo {
         domains.remove(domain);
     }
 
+    public void printDomains() {
+        int counter = 1;
+        for (Domain domain: domains) {
+            System.out.print(counter + ". ");
+            System.out.println(domain.toString("zooview"));
+            System.out.println("---");
+            counter++;
+        }
+    }
 
     /**
      * checks if:

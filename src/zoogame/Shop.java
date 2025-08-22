@@ -5,6 +5,7 @@ import zoogame.animals.SizeClass;
 import zoogame.domains.Domain;
 import zoogame.domains.InsectDomain;
 import zoogame.domains.ReptileDomain;
+import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,19 @@ public class Shop {
             new ReptileDomain(10000, SizeClass.BIG), new ReptileDomain(15000, SizeClass.MASSIVE)
     ));
 
+    public Shop() {}
+
+    public Shop(Shop other) {
+        for (Animal animal: other.availableAnimals) {
+            Animal newAnimal = AnimalFactory.createNewAnimalWithCopy(animal);
+            availableAnimals.add(newAnimal);
+        }
+        for (AnimalFoodPack pack: other.animalFoodPacks) {
+            AnimalFoodPack newPack = new AnimalFoodPack(pack);
+            animalFoodPacks.add(newPack);
+        }
+    }
+
     public void addAnimal(Animal animal) {
         availableAnimals.add(animal);
     }
@@ -42,14 +56,27 @@ public class Shop {
         for (Animal animal: availableAnimals) {
             System.out.print(counter + ".");
             System.out.println(animal.toString());
+            System.out.println("---");
+            counter++;
         }
     }
 
     public void printDomains() {
         int counter = 1;
         for (Domain domain: availableDomains) {
-            System.out.print(counter + ".");
+            System.out.print(counter + ". ");
             System.out.println(domain.toString("shopview"));
+            System.out.println("---");
+            counter++;
+        }
+    }
+
+    public void printFoodPacks() {
+        int counter = 1;
+        for (AnimalFoodPack pack: animalFoodPacks) {
+            System.out.print(counter + ". ");
+            System.out.println(pack.toString());
+            System.out.println("---");
             counter++;
         }
     }
@@ -61,6 +88,10 @@ public class Shop {
     public ArrayList<Animal> getAvailableAnimals() { return availableAnimals; }
 
     public ArrayList<Domain> getAvailableDomains() { return availableDomains; }
+
+    public ArrayList<AnimalFoodPack> getAnimalFoodPacks() {
+        return animalFoodPacks;
+    }
 
     public void deleteAnimal(Animal animal) {
         availableAnimals.remove(animal);

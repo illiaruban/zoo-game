@@ -45,4 +45,22 @@ public class AnimalFactory {
             }
         }
     }
+
+    public static Animal createNewAnimalWithCopy(Animal other) {
+        if (other.getAnimalType() == AnimalType.BIRD){
+            return new Bird((Bird)other);
+        }
+        else if (other.getAnimalType() == AnimalType.INSECT) {
+            return new Insect((Insect) other);
+        }
+        else if (other.getAnimalType() == AnimalType.MAMMAL){
+            return new Mammal((Mammal) other);
+        }
+        else if(other.getAnimalType() == AnimalType.REPTILE) {
+            return new Reptile((Reptile) other);
+        }
+        else {
+            return null;
+        }
+    }
 }
