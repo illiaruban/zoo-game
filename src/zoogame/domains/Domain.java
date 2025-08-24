@@ -4,6 +4,7 @@ import zoogame.animals.*;
 import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Domain {
     protected String nameOfDomain;
@@ -58,6 +59,8 @@ public class Domain {
 
     public void setPrice(double price) { this.price = price; }
 
+    public AnimalType getTypeOfDomain() { return animals.size() != 0 ? animals.getFirst().getAnimalType() : null;}
+
     //toString method for the shop
     //toString method for the zoo
 
@@ -98,6 +101,40 @@ public class Domain {
             animal.endDay();
         }
         return sumCoefficients;
+    }
+
+    //we must learn how many animals of each type have to be fed during morning, day and evening
+    //
+    public int getListUnfedAnimals(String dayTime) {
+        if (animals.size() == 0) {
+            return 0;
+        }
+        int unfedAnimalCounter = 0;
+        HashMap<AnimalType, Integer> result = new HashMap<>();
+        if (dayTime.equals("morning")) {
+            for (Animal animal: animals) {
+                if (animal.getFedPerDay().get("morning") == false) {
+                    unfedAnimalCounter++;
+                }
+            }
+        }
+        else if (dayTime.equals("day") && animals.getFirst().getTimesToFeedPerDay() == 3) {
+            for (Animal animal: animals) {
+                if (animal.getFedPerDay().get("day") == false) {
+                    unfedAnimalCounter++;
+                }
+            }
+        }
+        else if (dayTime.equals("evening")) {
+            for (Animal animal: animals) {
+                if (animal.getFedPerDay().get("evening") == false) {
+                    unfedAnimalCounter++;
+                }
+            }
+        }
+        else return 0;
+
+        return unfedAnimalCounter;
     }
 
 }

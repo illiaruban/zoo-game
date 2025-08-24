@@ -27,6 +27,8 @@ public abstract class Animal {
     public Animal(String name, double price){
         this.name = name;
         this.price = price;
+        fedPerDay.put("morning", false);
+        fedPerDay.put("evening", false);
     }
 
     public Animal(String name, double price, SizeClass sizeClass, int maxAmountInDomain, int timesToFeedPerDay, double fullIncome) {
@@ -35,6 +37,9 @@ public abstract class Animal {
         this.maxAmountInDomain = maxAmountInDomain;
         this.timesToFeedPerDay = timesToFeedPerDay;
         this.fullIncome = fullIncome;
+        if (timesToFeedPerDay == 3) {
+            fedPerDay.put("day", false);
+        }
     }
 
     //copy an object to add to domains, sell them safely etc.
@@ -47,6 +52,7 @@ public abstract class Animal {
         this.timesToFeedPerDay = other.timesToFeedPerDay;
         this.lowerQuality = other.lowerQuality;
         this.fullIncome = other.fullIncome;
+        this.fedPerDay = new HashMap<>(other.fedPerDay);
     }
 
     public String getName() {
@@ -94,6 +100,9 @@ public abstract class Animal {
     public void setFullIncome(double fullIncome) { this.fullIncome = fullIncome; }
 
     public double getFullIncome() { return fullIncome; }
+
+    public HashMap<String, Boolean> getFedPerDay() { return fedPerDay; }
+
 
     public String toString() {
         return String.format("[%s]\nName: %s\nSize: %s\nPrice: %.2f\nMax amount in one domain: %d\nTimes to feed per day: %d\n",

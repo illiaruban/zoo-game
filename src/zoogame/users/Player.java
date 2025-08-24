@@ -1,10 +1,7 @@
 package zoogame.users;
-
-import zoogame.AnimalFoodPack;
 import zoogame.Shop;
 import zoogame.Zoo;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
@@ -49,19 +46,47 @@ public class Player {
         while(true) {
             if (morningTime) {
                 //morning phase: buy food/buy domains/sell animals/feed animals
-                while (true) {
-                    System.out.println("Please choose an operation to perform:\n" +
-                            "1 - buy food\n" +
-                            "2 - buy domain\n" +
-                            "3 - feed animals\n" +
-                            "4 - sell an animal");
-                    System.out.print("> ");
 
-                }
             }
         }
 
     }
+    //-----------------------------------------------------------------[MORNING PHASE]
+    public void manageMorning(Scanner scanner) {
+        while (true) {
+            System.out.println("Please choose an operation to perform:\n" +
+                    "1 - buy food\n" +
+                    "2 - buy domain\n" +
+                    "3 - feed animals\n" +
+                    "4 - sell an animal\n" +
+                    "5 - see the list of animals to be fed for morning/day/evening\n" +
+                    "6 - print the current amount of food for every type of animal\n" +
+                    "0 - exit the game");
+            System.out.print("> ");
+            int input_command = scanner.nextInt();
+            switch(input_command) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    //TODO: implement function in zoo that gives names of an animals which are in zoo
+                    //TODO: implement delete function by index
+                    break;
+                case 5:
+                    printAnimalsToBeFed();
+                    break;
+                case 6:
+                    printFoodStorage();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 
     //-----------------------------------------------------------------[PRINT SHOP]
     public void printShopFoodPacks() {
@@ -80,10 +105,32 @@ public class Player {
         player_zoo.printDomains();
     }
 
-    //-----------------------------------------------------------------[BUY FOOD]
-    //-----------------------------------------------------------------[BUY FOOD]
-    //-----------------------------------------------------------------[BUY FOOD]
-    //
+    //-----------------------------------------------------------------[PRINT THE ANIMALS TO BE FED]
+
+    public void printAnimalsToBeFed() {
+        player_zoo.printListUnfedAnimals();
+    }
+
+    //-----------------------------------------------------------------[PRINT THE FOOD STORAGE]
+
+    public void printFoodStorage() {
+        player_zoo.printFoodStorage();
+    }
+
+    //-----------------------------------------------------------------[DAY PHASE]
+
+    public void manageDay(Scanner scanner) {
+
+    }
+    //-----------------------------------------------------------------[EVENING PHASE]
+
+    public void manageEvening(Scanner scanner) {
+
+    }
+    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[EVENING PHASE]
 
 
 }

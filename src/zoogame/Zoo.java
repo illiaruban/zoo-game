@@ -7,10 +7,8 @@ import zoogame.domains.ReptileDomain;
 import zoogame.exceptions.LowBalanceException;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NoDomainFoundForAnimalException;
-import java.util.Random;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Zoo {
     private ArrayList<Domain> domains = new ArrayList<>();
@@ -216,6 +214,41 @@ public class Zoo {
             return amountVisitors <= 65 ? 10 : amountVisitors <= 120 ? 14 : amountVisitors <= 150 ? 20 : amountVisitors <= 300 ? 37 : 50;
         }
         else return -1;
+    }
+
+    public void printListUnfedAnimals() {
+        final int MORNING = 0, DAY = 1, EVENING = 2;
+
+        // totals[type] -> int[3] = {morning, day, evening}
+        EnumMap<AnimalType, int[]> totals = new EnumMap<>(AnimalType.class);
+        for (AnimalType t : AnimalType.values()) totals.put(t, new int[3]);
+
+        for (Domain domain : domains) {
+            AnimalType type = domain.getTypeOfDomain();
+            if (type == null) continue;
+
+            int[] t = totals.get(type);
+            t[MORNING] += domain.getListUnfedAnimals("morning");
+            t[DAY]     += domain.getListUnfedAnimals("day");
+            t[EVENING] += domain.getListUnfedAnimals("evening");
+        }
+
+        for (Map.Entry<AnimalType, int[]> e : totals.entrySet()) {
+            int[] t = e.getValue();
+            System.out.printf(
+                    "%s -> morning: %d, day: %d, evening: %d\n",
+                    e.getKey(), t[MORNING], t[DAY], t[EVENING]
+            );
+        }
+    }
+
+    public void printFoodStorage() {
+        System.out.printf("Current food storage contains:\n" +
+                "Birds - %d portions\n" +
+                "Insects - %d portions\n" +
+                "Mammals - %d portions\n" +
+                "Reptiles - %d portions\n", foodStorage.get(AnimalType.BIRD), foodStorage.get(AnimalType.INSECT),
+                foodStorage.get(AnimalType.MAMMAL), foodStorage.get(AnimalType.REPTILE));
     }
 
 
