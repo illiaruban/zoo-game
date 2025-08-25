@@ -1,8 +1,8 @@
-# Zoo Manager (WIP)
+# Zoo Manager
 
 Manage a virtual zoo as a **player** or **admin**: buy and sell animals, build domains (habitats), purchase food, and tune game data. This is a Java console project currently under active development.
 
-> **Status:** 🚧 Work in progress — core Player actions are partially implemented. Upcoming: Unit Tests, MySQL persistence.
+> **Status:** Work in progress — core Player actions are partially implemented. Upcoming: Unit Tests, MySQL persistence.
 
 ---
 
@@ -27,18 +27,18 @@ Manage a virtual zoo as a **player** or **admin**: buy and sell animals, build d
 
 ## Features
 
-* 🎮 **Player mode**
+*  **Player mode**
 
   * Buy / sell animals
   * Buy / sell **domains** (habitats) required for animals to live
   * Buy **food packs** and keep animals fed
-* 🧩 **Animal types**: 4 (Mammal, Bird, Insect, Reptile), each with **unique behaviors**
-* 🛠️ **Admin mode**
+* **Animal types**: 4 (Mammal, Bird, Insect, Reptile), each with **unique behaviors**
+*  **Admin mode**
 
   * Create custom animals
   * Edit animal attributes
   * Change domain prices
-* 🧪 **Planned**: unit testing, saving/loading via **MySQL**
+* **Planned**: unit testing, saving/loading via **MySQL**
 
 ## Gameplay Loop
 
@@ -192,6 +192,7 @@ Pull requests are welcome. Please describe changes clearly and add tests where a
 ## License
 
 MIT — feel free to use and modify. Add your `LICENSE` file if missing.
+
 
 
 
