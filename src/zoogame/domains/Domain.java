@@ -1,6 +1,7 @@
 package zoogame.domains;
 
 import zoogame.animals.*;
+import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
@@ -41,11 +42,21 @@ public class Domain {
         animals.add(animal);
     }
 
-    public void takeAnimal(Animal animal) {
-        animals.remove(animal);
+    public double takeAnimal() throws NoAnimalFoundException{
+        if (animals.size() == 0) {
+            throw new NoAnimalFoundException("Domain is empty");
+        }
+        Animal animal = animals.getLast();
+        double price = animal.getPrice();
+        animals.remove(animals.getLast());
         if (animals.size() == 0) {
             nameOfDomain = "Empty domain";
         }
+        return switch(animal.getAnimalType()) {
+            case BIRD -> price / 1.75;
+            case INSECT -> price / 2;
+            case MAMMAL, REPTILE -> price / 1.5;
+        };
     }
 
     public String getNameOfDomain() {
@@ -110,7 +121,6 @@ public class Domain {
             return 0;
         }
         int unfedAnimalCounter = 0;
-        HashMap<AnimalType, Integer> result = new HashMap<>();
         if (dayTime.equals("morning")) {
             for (Animal animal: animals) {
                 if (animal.getFedPerDay().get("morning") == false) {

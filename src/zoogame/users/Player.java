@@ -1,9 +1,18 @@
 package zoogame.users;
 import zoogame.Shop;
 import zoogame.Zoo;
+import zoogame.exceptions.NoAnimalFoundException;
+import zoogame.exceptions.NoDomainFoundException;
 
 import java.util.Scanner;
 
+/**
+ * Describes player's functionality during three phases of game.
+ * Planned:
+ * - upon entering player account download the admin version of the shop
+ * (at first time while launching and if the changes from admin account are detected(update))
+ * - upon entering the first time the zoo and shop will be downloaded from database
+ */
 public class Player {
 
     Zoo player_zoo = new Zoo();
@@ -46,9 +55,23 @@ public class Player {
         while(true) {
             if (morningTime) {
                 //morning phase: buy food/buy domains/sell animals/feed animals
-
+                manageMorning(scanner);
+            }
+            if (dayTime) {
+                manageDay(scanner);
+            }
+            if (eveningTime) {
+                manageEvening(scanner);
+            }
+            while (true) {
+                System.out.print("Do you want to start next day?[y/n]: ");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("y")) break;
+                if (input.equalsIgnoreCase("n")) return;
+                System.out.println("Input incorrect, try again.");
             }
         }
+
 
     }
     //-----------------------------------------------------------------[MORNING PHASE]
@@ -61,6 +84,7 @@ public class Player {
                     "4 - sell an animal\n" +
                     "5 - see the list of animals to be fed for morning/day/evening\n" +
                     "6 - print the current amount of food for every type of animal\n" +
+                    "7 - see all domains and animals in it" +
                     "0 - exit the game");
             System.out.print("> ");
             int input_command = scanner.nextInt();
@@ -72,14 +96,16 @@ public class Player {
                 case 3:
                     break;
                 case 4:
-                    //TODO: implement function in zoo that gives names of an animals which are in zoo
-                    //TODO: implement delete function by index
+                    deleteAnimal(scanner);
                     break;
                 case 5:
                     printAnimalsToBeFed();
                     break;
                 case 6:
                     printFoodStorage();
+                    break;
+                case 7:
+                    printZooDomains();
                     break;
                 default:
                     break;
@@ -127,10 +153,37 @@ public class Player {
     public void manageEvening(Scanner scanner) {
 
     }
-    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[DELETE AN ANIMAL]
+    public void deleteAnimal(Scanner scanner) {
+        printZooDomains();
+        while(true) {
+            System.out.print("Enter the number of domain you want to sell an animal from: ");
+            int domainIndex = scanner.nextInt() - 1;
+            scanner.nextLine();
+            try {
+                player_zoo.sellAnimal(domainIndex);
+            }
+            catch(NoAnimalFoundException | NoDomainFoundException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) {
+                    return;
+                }
+            }
+        }
+    }
+
     //-----------------------------------------------------------------[EVENING PHASE]
     //-----------------------------------------------------------------[EVENING PHASE]
     //-----------------------------------------------------------------[EVENING PHASE]
 
+    private boolean wantsToRetry(Scanner scanner) {
+        while (true) {
+            System.out.print("Do you want to retry?[y/n]: ");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("y")) return true;
+            if (input.equalsIgnoreCase("n")) return false;
+            System.out.println("Input incorrect, try again.");
+        }
+    }
 
 }

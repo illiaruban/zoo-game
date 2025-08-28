@@ -6,6 +6,7 @@ import zoogame.domains.InsectDomain;
 import zoogame.domains.ReptileDomain;
 import zoogame.exceptions.LowBalanceException;
 import zoogame.exceptions.NoAnimalFoundException;
+import zoogame.exceptions.NoDomainFoundException;
 import zoogame.exceptions.NoDomainFoundForAnimalException;
 
 import java.util.*;
@@ -149,22 +150,16 @@ public class Zoo {
         }
     }
 
-    public void sellAnimal(Animal animal) throws NoAnimalFoundException {
-        boolean isTaken = false;
-        for(Domain domain: domains) {
-            if (domain.containsAnimalsLike(animal)) {
-                domain.takeAnimal(animal);
-                isTaken = true;
-                break;
-            }
+    public void sellAnimal(int index) throws NoAnimalFoundException, NoDomainFoundException {
+        if (domains.size() < index || index < 0) {
+            throw new NoDomainFoundException("There is no domain under such index");
         }
-        if (isTaken) {
-            balance += animal.getAnimalType() == AnimalType.INSECT ? animal.getPrice() / 2 :
-                            animal.getAnimalType() == AnimalType.MAMMAL ? animal.getPrice() / 1.75 :
-                            animal.getPrice() / 1.5;
+        Domain domain = domains.get(index);
+        try {
+            balance += domain.takeAnimal();
         }
-        else {
-            throw new NoAnimalFoundException("Zoo does not possess this animal");
+        catch( NoAnimalFoundException e) {
+            throw e;
         }
     }
 
