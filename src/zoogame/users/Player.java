@@ -85,7 +85,7 @@ public class Player {
                     "2 - buy domain\n" +
                     "3 - feed animals\n" +
                     "4 - sell an animal\n" +
-                    "5 - see the list of animals to be fed during morning phase\n" +
+                    "5 - see the list of animals to be fed during all phases\n" +
                     "6 - print the current amount of food for every type of animal\n" +
                     "7 - see all domains and animals in it" +
                     "0 - proceed to next phase");
