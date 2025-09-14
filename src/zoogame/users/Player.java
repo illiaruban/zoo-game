@@ -85,10 +85,10 @@ public class Player {
                     "2 - buy domain\n" +
                     "3 - feed animals\n" +
                     "4 - sell an animal\n" +
-                    "5 - see the list of animals to be fed for morning/day/evening\n" +
+                    "5 - see the list of animals to be fed during morning phase\n" +
                     "6 - print the current amount of food for every type of animal\n" +
                     "7 - see all domains and animals in it" +
-                    "0 - go to Day Time");
+                    "0 - proceed to next phase");
             System.out.print("> ");
             int input_command = scanner.nextInt();
             switch(input_command) {
@@ -99,8 +99,7 @@ public class Player {
                     buyDomain(scanner);
                     break;
                 case 3:
-                    //TODO:feed animals
-
+                    feedAnimals("morning");
                     break;
                 case 4:
                     deleteAnimal(scanner);
@@ -229,7 +228,12 @@ public class Player {
             }
         }
     }
-    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[RETRY]
+    public void feedAnimals(String dayTime) {
+        player_zoo.feedAnimals(dayTime);
+    }
+
+    //-----------------------------------------------------------------[RETRY]
 
     private boolean wantsToRetry(Scanner scanner) {
         while (true) {

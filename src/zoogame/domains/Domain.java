@@ -1,7 +1,9 @@
 package zoogame.domains;
 
+import zoogame.AnimalFoodPack;
 import zoogame.animals.*;
 import zoogame.exceptions.NoAnimalFoundException;
+import zoogame.exceptions.NotEnoughFoodException;
 import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class Domain {
 
     //might write all the checks in zoo function as its zoo's job to check all conditions to add animal in domains
     public void addAnimal(Animal animal) {
+        if (animals.size() == 0) nameOfDomain = animal.getName() + " domain";
         animals.add(animal);
     }
 
@@ -145,6 +148,24 @@ public class Domain {
         else return 0;
 
         return unfedAnimalCounter;
+    }
+
+    public AnimalType getAnimalType() {
+        return animals.size() != 0 ? animals.getFirst().getAnimalType() : null;
+    }
+
+    //feed animals in every domain
+    //function also should take food packs as parameter
+    public void feedAnimals(String timeOfDay, int amountOfFood) throws NotEnoughFoodException{
+        int timesToFeed = animals.getFirst().getTimesToFeedPerDay();
+        if (timesToFeed == 2 && timeOfDay.equals("day")) {
+            return;
+        }
+        for (Animal animal:animals) {
+            if (amountOfFood == 0) throw new NotEnoughFoodException(nameOfDomain + " had not enough food.");
+            animal.feed(timeOfDay);
+            amountOfFood--;
+        }
     }
 
 }

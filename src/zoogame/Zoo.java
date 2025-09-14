@@ -4,10 +4,7 @@ import zoogame.animals.*;
 import zoogame.domains.Domain;
 import zoogame.domains.InsectDomain;
 import zoogame.domains.ReptileDomain;
-import zoogame.exceptions.LowBalanceException;
-import zoogame.exceptions.NoAnimalFoundException;
-import zoogame.exceptions.NoDomainFoundException;
-import zoogame.exceptions.NoDomainFoundForAnimalException;
+import zoogame.exceptions.*;
 
 import java.util.*;
 
@@ -248,8 +245,20 @@ public class Zoo {
                 foodStorage.get(AnimalType.MAMMAL), foodStorage.get(AnimalType.REPTILE));
     }
 
-    public void feedAnimals() {
-
+    public void feedAnimals(String dayTime) {
+        for (Domain domain: domains) {
+            AnimalType type = domain.getAnimalType();
+            if (type == null) continue;
+            int amountOfFood = foodStorage.get(type) > domain.getCurrentAmountOfAnimals() ?
+                    domain.getCurrentAmountOfAnimals() : foodStorage.get(type);
+            foodStorage.put(type, foodStorage.get(type) - amountOfFood);
+            try {
+                domain.feedAnimals(dayTime, amountOfFood);
+            }
+            catch (NotEnoughFoodException e) {
+                System.out.println("Domain " + domains.indexOf(domain) + ":" + e.getMessage());
+            }
+        }
     }
 
 

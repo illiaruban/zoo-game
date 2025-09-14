@@ -110,6 +110,7 @@ public abstract class Animal {
     }
     public void feed(String timeOfDay) {
         todayEatCounter++;
+        fedPerDay.put(timeOfDay, true);
     }
 
     public abstract int getCounter();
