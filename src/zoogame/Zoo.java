@@ -74,10 +74,12 @@ public class Zoo {
     }
 
     public void buyFoodPack(AnimalFoodPack foodPack) throws LowBalanceException {
+
         if (balance < foodPack.getPrice())
         {
             throw new LowBalanceException("The budget cannot allow to purchase the domain");
         }
+        balance -= foodPack.getPrice();
         for (AnimalType type: foodPack.content.keySet()) {
             int currentFoodAmount = foodStorage.get(type);
             foodStorage.put(type, currentFoodAmount + foodPack.content.get(type));
@@ -244,6 +246,10 @@ public class Zoo {
                 "Mammals - %d portions\n" +
                 "Reptiles - %d portions\n", foodStorage.get(AnimalType.BIRD), foodStorage.get(AnimalType.INSECT),
                 foodStorage.get(AnimalType.MAMMAL), foodStorage.get(AnimalType.REPTILE));
+    }
+
+    public void feedAnimals() {
+
     }
 
 

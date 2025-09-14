@@ -1,6 +1,9 @@
 package zoogame.users;
+import zoogame.AnimalFoodPack;
 import zoogame.Shop;
 import zoogame.Zoo;
+import zoogame.domains.Domain;
+import zoogame.exceptions.LowBalanceException;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NoDomainFoundException;
 
@@ -85,15 +88,19 @@ public class Player {
                     "5 - see the list of animals to be fed for morning/day/evening\n" +
                     "6 - print the current amount of food for every type of animal\n" +
                     "7 - see all domains and animals in it" +
-                    "0 - exit the game");
+                    "0 - go to Day Time");
             System.out.print("> ");
             int input_command = scanner.nextInt();
             switch(input_command) {
                 case 1:
+                    buyFood(scanner);
                     break;
                 case 2:
+                    buyDomain(scanner);
                     break;
                 case 3:
+                    //TODO:feed animals
+
                     break;
                 case 4:
                     deleteAnimal(scanner);
@@ -107,6 +114,8 @@ public class Player {
                 case 7:
                     printZooDomains();
                     break;
+                case 0:
+                    return;
                 default:
                     break;
             }
@@ -155,6 +164,7 @@ public class Player {
     }
     //-----------------------------------------------------------------[DELETE AN ANIMAL]
     public void deleteAnimal(Scanner scanner) {
+        System.out.println("List of your domains: ");
         printZooDomains();
         while(true) {
             System.out.print("Enter the number of domain you want to sell an animal from: ");
@@ -162,6 +172,7 @@ public class Player {
             scanner.nextLine();
             try {
                 player_zoo.sellAnimal(domainIndex);
+                break;
             }
             catch(NoAnimalFoundException | NoDomainFoundException e) {
                 System.out.println(e.getMessage());
@@ -172,8 +183,52 @@ public class Player {
         }
     }
 
-    //-----------------------------------------------------------------[EVENING PHASE]
-    //-----------------------------------------------------------------[EVENING PHASE]
+    //-----------------------------------------------------------------[BUY FOOD]
+
+    public void buyFood(Scanner scanner) {
+        System.out.println("List of the food packs");
+        player_shop.printFoodPacks();
+        while(true) {
+            System.out.print("Enter the number of the pack you want to purchase: ");
+            int number = scanner.nextInt();
+            scanner.nextLine();
+            try {
+                AnimalFoodPack foodPack = new AnimalFoodPack(player_shop.getAnimalFoodPacks().get(number));
+                player_zoo.buyFoodPack(foodPack);
+                break;
+            }
+            catch(LowBalanceException | IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) {
+                    return;
+                }
+            }
+        }
+
+
+    }
+    //-----------------------------------------------------------------[BUY DOMAIN]
+
+    public void buyDomain(Scanner scanner) {
+        System.out.println("List of domains: ");
+        player_shop.printDomains();
+        while(true) {
+            System.out.print("Enter the number of the domain you want to purchase: ");
+            int number = scanner.nextInt();
+            scanner.nextLine();
+            try {
+                Domain domain = new Domain(player_shop.getAvailableDomains().get(number));
+                player_zoo.buyDomain(domain);
+                break;
+            }
+            catch(LowBalanceException | IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) {
+                    return;
+                }
+            }
+        }
+    }
     //-----------------------------------------------------------------[EVENING PHASE]
 
     private boolean wantsToRetry(Scanner scanner) {
