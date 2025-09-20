@@ -73,6 +73,8 @@ public class Domain {
 
     public void setPrice(double price) { this.price = price; }
 
+    public ArrayList<Animal> getAnimals() { return animals; }
+
     public AnimalType getTypeOfDomain() { return animals.size() != 0 ? animals.getFirst().getAnimalType() : null;}
 
     //toString method for the shop

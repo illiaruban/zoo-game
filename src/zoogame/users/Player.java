@@ -10,6 +10,7 @@ import zoogame.exceptions.NoDomainFoundException;
 import zoogame.exceptions.NoDomainFoundForAnimalException;
 import zoogame.factories.AnimalFactory;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -201,11 +202,10 @@ public class Player {
                     buyDomain(scanner);
                     break;
                 case 4:
-                    deleteAnimal(scanner);
+                    sellAnimal(scanner);
                     break;
                 case 5:
-                    //TODO: write sell domain function
-
+                    sellDomain(scanner);
                     break;
                 case 6:
                     buyFood(scanner);
@@ -263,7 +263,7 @@ public class Player {
     }
 
     //-----------------------------------------------------------------[SELL AN ANIMAL]
-    public void deleteAnimal(Scanner scanner) {
+    public void sellAnimal(Scanner scanner) {
         System.out.println("List of your domains: ");
         printZooDomains();
         while(true) {
@@ -329,6 +329,49 @@ public class Player {
             }
         }
     }
+
+    //-----------------------------------------------------------------[SELL DOMAIN]
+
+    public void sellDomain(Scanner scanner) {
+        System.out.println("List of domains: ");
+        player_zoo.printDomains();
+        while(true) {
+            System.out.print("Enter the number of domain you want to sell: ");
+            int index = scanner.nextInt() - 1;
+            scanner.nextLine();
+            int size = player_zoo.getAllDomains().size();
+            try {
+                if (index > size || index < 0) {
+                    throw new NoDomainFoundException("No domain under that number.");
+                }
+                Domain domain = new Domain(player_zoo.getAllDomains().get(index));
+                if (domain.getCurrentAmountOfAnimals() != 0) {
+                    System.out.println("Domain is not empty. Would you like to sell all the animals in the domain[y/n]?");
+                    if (!wantsToRetry(scanner)) {
+                        return;
+                    }
+                    try {
+                        for (int i = 0; i < size; i++) {
+                            domain.takeAnimal();
+                        }
+                    }
+                    catch (NoAnimalFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                player_zoo.sellDomain(domain);
+                break;
+            }
+            catch(NoDomainFoundException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) {
+                    return;
+                }
+            }
+        }
+    }
+
+
     //-----------------------------------------------------------------[FEED ANIMALS]
     public void feedAnimals(String dayTime) {
         player_zoo.feedAnimals(dayTime);
@@ -357,13 +400,6 @@ public class Player {
         }
     }
 
-    //-----------------------------------------------------------------[SELL ANIMAL]
-
-    public void sellAnimal(Scanner scanner) {
-        //call functions from
-
-
-    }
 
 
     //-----------------------------------------------------------------[RETRY]
