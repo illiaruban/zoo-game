@@ -57,13 +57,16 @@ public class Player {
 
         while(true) {
             if (morningTime) {
+                System.out.println("----------------------------------------------------------------");
                 //morning phase: buy food/buy domains/sell animals/feed animals
                 manageMorning(scanner);
             }
             if (dayTime) {
+                System.out.println("----------------------------------------------------------------");
                 manageDay(scanner);
             }
             if (eveningTime) {
+                System.out.println("----------------------------------------------------------------");
                 manageEvening(scanner);
             }
             while (true) {
@@ -116,42 +119,14 @@ public class Player {
                     break;
                 case 0:
                     System.out.println("Morning phase is over. Day phase gonna keep workers busy!");
+                    morningTime = false;
+                    dayTime = true;
                     return;
                 default:
                     System.out.println("No command under that number.");
                     break;
             }
         }
-    }
-
-
-    //-----------------------------------------------------------------[PRINT SHOP]
-    public void printShopFoodPacks() {
-        player_shop.printFoodPacks();
-    }
-    public void printShopAnimals() {
-        player_shop.printAnimals();
-    }
-
-    public void printShopDomains() {
-        player_shop.printDomains();
-    }
-    //-----------------------------------------------------------------[PRINT ZOO]
-
-    public void printZooDomains() {
-        player_zoo.printDomains();
-    }
-
-    //-----------------------------------------------------------------[PRINT THE ANIMALS TO BE FED]
-
-    public void printAnimalsToBeFed() {
-        player_zoo.printListUnfedAnimals();
-    }
-
-    //-----------------------------------------------------------------[PRINT THE FOOD STORAGE]
-
-    public void printFoodStorage() {
-        player_zoo.printFoodStorage();
     }
 
     //-----------------------------------------------------------------[DAY PHASE]
@@ -194,6 +169,7 @@ public class Player {
             }
         }
     }
+
     //-----------------------------------------------------------------[EVENING PHASE]
 
     public void manageEvening(Scanner scanner) {
@@ -209,8 +185,78 @@ public class Player {
                     "8 - print the current amount of food for every type of animal\n" +
                     "9 - see all domains and animals in it\n" +
                     "0 - proceed to evening phase");
+            System.out.println("> ");
+            int input_command = scanner.nextInt();
+            scanner.nextLine();
+            switch(input_command) {
+                case 1:
+                    feedAnimals("evening");
+                    break;
+                case 2:
+                    //TODO: write buy animal as player function
+                    break;
+                case 3:
+                    buyDomain(scanner);
+                    break;
+                case 4:
+                    //TODO: write sell animal function
+                    break;
+                case 5:
+                    //TODO: write sell domain function
+                    break;
+                case 6:
+                    buyFood(scanner);
+                    break;
+                case 7:
+                    printAnimalsToBeFed();
+                    break;
+                case 8:
+                    printFoodStorage();
+                    break;
+                case 9:
+                    printZooDomains();
+                    break;
+                case 0:
+                    System.out.println("Evening phase is over. Good work, boss!");
+                    return;
+                default:
+                    System.out.println("No command under that number.");
+                    break;
+            }
         }
     }
+
+
+    //-----------------------------------------------------------------[PRINT SHOP]
+    public void printShopFoodPacks() {
+        player_shop.printFoodPacks();
+    }
+    public void printShopAnimals() {
+        player_shop.printAnimals();
+    }
+
+    public void printShopDomains() {
+        player_shop.printDomains();
+    }
+
+    //-----------------------------------------------------------------[PRINT ZOO]
+
+    public void printZooDomains() {
+        player_zoo.printDomains();
+    }
+
+    //-----------------------------------------------------------------[PRINT THE ANIMALS TO BE FED]
+
+    public void printAnimalsToBeFed() {
+        player_zoo.printListUnfedAnimals();
+    }
+
+    //-----------------------------------------------------------------[PRINT THE FOOD STORAGE]
+
+    public void printFoodStorage() {
+        player_zoo.printFoodStorage();
+    }
+
     //-----------------------------------------------------------------[DELETE AN ANIMAL]
     public void deleteAnimal(Scanner scanner) {
         System.out.println("List of your domains: ");
