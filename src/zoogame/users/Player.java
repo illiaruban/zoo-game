@@ -2,10 +2,13 @@ package zoogame.users;
 import zoogame.AnimalFoodPack;
 import zoogame.Shop;
 import zoogame.Zoo;
+import zoogame.animals.Animal;
 import zoogame.domains.Domain;
 import zoogame.exceptions.LowBalanceException;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NoDomainFoundException;
+import zoogame.exceptions.NoDomainFoundForAnimalException;
+import zoogame.factories.AnimalFactory;
 
 import java.util.Scanner;
 
@@ -24,7 +27,6 @@ public class Player {
         this.player_zoo = new Zoo(other_zoo);
         this.player_shop = new Shop(other_shop);
     }
-    Scanner scanner = new Scanner(System.in);
     boolean morningTime = true;
     boolean dayTime = false;
     boolean eveningTime = false;
@@ -32,6 +34,7 @@ public class Player {
     public Player() {}
 
     public void manageGame() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome, Player!");
         while (true) {
             System.out.println("Would you like to start a game?\n" +
@@ -51,9 +54,6 @@ public class Player {
                 System.out.println("Input incorrect. Please enter '1' to start the game OR '0' to stop playing");
             }
         }
-
-        //in the zoo there are 3 phases: morning, day and evening. In the morning you can buy only food and domains and sell animals,
-        // on evening you can buy animals,food and domains as well as sell them
 
         while(true) {
             if (morningTime) {
@@ -162,6 +162,8 @@ public class Player {
                     break;
                 case 0:
                     System.out.println("Day phase is over. Evening phase is coming!");
+                    dayTime = false;
+                    eveningTime = true;
                     return;
                 default:
                     System.out.println("No command under that number.");
@@ -193,13 +195,14 @@ public class Player {
                     feedAnimals("evening");
                     break;
                 case 2:
-                    //TODO: write buy animal as player function
+                    buyAnimal(scanner);
                     break;
                 case 3:
                     buyDomain(scanner);
                     break;
                 case 4:
                     //TODO: write sell animal function
+
                     break;
                 case 5:
                     //TODO: write sell domain function
@@ -218,6 +221,8 @@ public class Player {
                     break;
                 case 0:
                     System.out.println("Evening phase is over. Good work, boss!");
+                    eveningTime = false;
+                    morningTime = true;
                     return;
                 default:
                     System.out.println("No command under that number.");
@@ -309,7 +314,7 @@ public class Player {
         player_shop.printDomains();
         while(true) {
             System.out.print("Enter the number of the domain you want to purchase: ");
-            int number = scanner.nextInt();
+            int number = scanner.nextInt() - 1;
             scanner.nextLine();
             try {
                 Domain domain = new Domain(player_shop.getAvailableDomains().get(number));
@@ -324,10 +329,42 @@ public class Player {
             }
         }
     }
-    //-----------------------------------------------------------------[RETRY]
+    //-----------------------------------------------------------------[FEED ANIMALS]
     public void feedAnimals(String dayTime) {
         player_zoo.feedAnimals(dayTime);
     }
+
+    //-----------------------------------------------------------------[BUY ANIMAL]
+
+    public void buyAnimal(Scanner scanner) {
+        System.out.println("List of animals in the shop: ");
+        player_shop.printAnimals();
+        while(true) {
+            System.out.print("Enter the number of the animal you want to purchase: ");
+            int number = scanner.nextInt() - 1;
+            scanner.nextLine();
+            try {
+                Animal animal = AnimalFactory.createNewAnimalWithCopy(player_shop.getAvailableAnimals().get(number));
+                player_zoo.buyAnimal(animal);
+                break;
+            }
+            catch(LowBalanceException | IndexOutOfBoundsException | NoDomainFoundForAnimalException e) {
+                System.out.println(e.getMessage());
+                if (!wantsToRetry(scanner)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    //-----------------------------------------------------------------[SELL ANIMAL]
+
+    public void sellAnimal(Scanner scanner) {
+        //call functions from
+
+
+    }
+
 
     //-----------------------------------------------------------------[RETRY]
 

@@ -129,13 +129,27 @@ public class Zoo {
         if (animal instanceof Reptile) lookForReptileDomain = true;
 
         for (Domain domain: domains) {
-            if (lookForInsectDomain && !(domain instanceof InsectDomain)) continue;
-            else if (lookForReptileDomain && !(domain instanceof ReptileDomain)) continue;
-            else if (domain.getSizeClass() != animal.getSizeClass()) continue;
-            else if (domain.getCurrentAmountOfAnimals() > animal.getMaxAmountInDomain()) continue;
-            if (domain.getNameOfDomain().equals("Empty domain")) domainWithNoAnimals = domain;
-            if (domain.containsAnimalsLike(animal)) domainWithLikeAnimals = domain;
-            if (domainWithNoAnimals != null && domainWithLikeAnimals != null) break;
+            if (lookForInsectDomain && !(domain instanceof InsectDomain)) {
+                continue;
+            }
+            else if (lookForReptileDomain && !(domain instanceof ReptileDomain)) {
+                continue;
+            }
+            else if (domain.getSizeClass() != animal.getSizeClass()) {
+                continue;
+            }
+            else if (domain.getCurrentAmountOfAnimals() > animal.getMaxAmountInDomain()) {
+                continue;
+            }
+            if (domain.getNameOfDomain().equals("Empty domain")) {
+                domainWithNoAnimals = domain;
+            }
+            if (domain.containsAnimalsLike(animal)) {
+                domainWithLikeAnimals = domain;
+            }
+            if (domainWithNoAnimals != null && domainWithLikeAnimals != null){
+                break;
+            }
         }
         try {
             if (domainWithLikeAnimals != null) domainWithLikeAnimals.addAnimal(animal);
@@ -149,7 +163,10 @@ public class Zoo {
         }
     }
 
+    //TODO: change logic so scanner is given as parameter and the index is entered here
     public void sellAnimal(int index) throws NoAnimalFoundException, NoDomainFoundException {
+
+
         if (domains.size() < index || index < 0) {
             throw new NoDomainFoundException("There is no domain under such index");
         }
