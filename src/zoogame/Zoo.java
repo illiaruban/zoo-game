@@ -165,8 +165,6 @@ public class Zoo {
 
     //TODO: change logic so scanner is given as parameter and the index is entered here
     public void sellAnimal(int index) throws NoAnimalFoundException, NoDomainFoundException {
-
-
         if (domains.size() < index || index < 0) {
             throw new NoDomainFoundException("There is no domain under such index");
         }

@@ -201,11 +201,11 @@ public class Player {
                     buyDomain(scanner);
                     break;
                 case 4:
-                    //TODO: write sell animal function
-
+                    deleteAnimal(scanner);
                     break;
                 case 5:
                     //TODO: write sell domain function
+
                     break;
                 case 6:
                     buyFood(scanner);
@@ -262,7 +262,7 @@ public class Player {
         player_zoo.printFoodStorage();
     }
 
-    //-----------------------------------------------------------------[DELETE AN ANIMAL]
+    //-----------------------------------------------------------------[SELL AN ANIMAL]
     public void deleteAnimal(Scanner scanner) {
         System.out.println("List of your domains: ");
         printZooDomains();
