@@ -88,9 +88,10 @@ public class Player {
                     "5 - see the list of animals to be fed during all phases\n" +
                     "6 - print the current amount of food for every type of animal\n" +
                     "7 - see all domains and animals in it" +
-                    "0 - proceed to next phase");
+                    "0 - proceed to day phase");
             System.out.print("> ");
             int input_command = scanner.nextInt();
+            scanner.nextLine();
             switch(input_command) {
                 case 1:
                     buyFood(scanner);
@@ -114,8 +115,10 @@ public class Player {
                     printZooDomains();
                     break;
                 case 0:
+                    System.out.println("Morning phase is over. Day phase gonna keep workers busy!");
                     return;
                 default:
+                    System.out.println("No command under that number.");
                     break;
             }
         }
@@ -154,12 +157,59 @@ public class Player {
     //-----------------------------------------------------------------[DAY PHASE]
 
     public void manageDay(Scanner scanner) {
-
+        //day function: sell animals, feed animals, print unfed animals
+        while(true) {
+            System.out.println("Please choose an operation to perform:\n" +
+                    "1 - feed animals\n" +
+                    "2 - sell an animal\n" +
+                    "3 - see the list of animals to be fed during all phases\n" +
+                    "4 - print the current amount of food for every type of animal\n" +
+                    "5 - see all domains and animals in it\n" +
+                    "0 - proceed to evening phase");
+            System.out.println("> ");
+            int input_command = scanner.nextInt();
+            scanner.nextLine();
+            switch(input_command) {
+                case 1:
+                    feedAnimals("day");
+                    break;
+                case 2:
+                    deleteAnimal(scanner);
+                    break;
+                case 3:
+                    printAnimalsToBeFed();
+                    break;
+                case 4:
+                    printFoodStorage();
+                    break;
+                case 5:
+                    printZooDomains();
+                    break;
+                case 0:
+                    System.out.println("Day phase is over. Evening phase is coming!");
+                    return;
+                default:
+                    System.out.println("No command under that number.");
+                    break;
+            }
+        }
     }
     //-----------------------------------------------------------------[EVENING PHASE]
 
     public void manageEvening(Scanner scanner) {
-
+        while(true) {
+            System.out.println("Please choose an operation to perform:\n" +
+                    "1 - feed animals\n" +
+                    "2 - buy an animal\n" +
+                    "3 - buy a domain\n" +
+                    "4 - sell an animal\n" +
+                    "5 - sell a domain\n" +
+                    "6 - buy food\n" +
+                    "7 - see the list of animals to be fed during all phases\n" +
+                    "8 - print the current amount of food for every type of animal\n" +
+                    "9 - see all domains and animals in it\n" +
+                    "0 - proceed to evening phase");
+        }
     }
     //-----------------------------------------------------------------[DELETE AN ANIMAL]
     public void deleteAnimal(Scanner scanner) {
