@@ -55,19 +55,26 @@ public class Player {
                 System.out.println("Input incorrect. Please enter '1' to start the game OR '0' to stop playing");
             }
         }
+        System.out.println("----------------------------------------------------------------");
+        System.out.println("Loading the content...");
+        player_shop = getAdminShop();
+        //TODO:load all the content from file/database?
 
         while(true) {
             if (morningTime) {
                 System.out.println("----------------------------------------------------------------");
+                System.out.println("MORNING TIME!");
                 //morning phase: buy food/buy domains/sell animals/feed animals
                 manageMorning(scanner);
             }
             if (dayTime) {
                 System.out.println("----------------------------------------------------------------");
+                System.out.println("DAY TIME!");
                 manageDay(scanner);
             }
             if (eveningTime) {
                 System.out.println("----------------------------------------------------------------");
+                System.out.println("EVENING TIME!");
                 manageEvening(scanner);
             }
             while (true) {
@@ -91,7 +98,7 @@ public class Player {
                     "4 - sell an animal\n" +
                     "5 - see the list of animals to be fed during all phases\n" +
                     "6 - print the current amount of food for every type of animal\n" +
-                    "7 - see all domains and animals in it" +
+                    "7 - see all domains and animals in it\n" +
                     "0 - proceed to day phase");
             System.out.print("> ");
             int input_command = scanner.nextInt();
@@ -107,7 +114,7 @@ public class Player {
                     feedAnimals("morning");
                     break;
                 case 4:
-                    deleteAnimal(scanner);
+                    sellAnimal(scanner);
                     break;
                 case 5:
                     printAnimalsToBeFed();
@@ -150,7 +157,7 @@ public class Player {
                     feedAnimals("day");
                     break;
                 case 2:
-                    deleteAnimal(scanner);
+                    sellAnimal(scanner);
                     break;
                 case 3:
                     printAnimalsToBeFed();
@@ -281,6 +288,8 @@ public class Player {
                 }
             }
         }
+        System.out.println("Current balance: " + player_zoo.getBalance());
+        System.out.println("Animal sold successfully. Bye bye!");
     }
 
     //-----------------------------------------------------------------[BUY FOOD]
@@ -304,7 +313,8 @@ public class Player {
                 }
             }
         }
-
+        System.out.println("Current balance: " + player_zoo.getBalance());
+        System.out.println("Food pack purchased.");
 
     }
     //-----------------------------------------------------------------[BUY DOMAIN]
@@ -328,6 +338,8 @@ public class Player {
                 }
             }
         }
+        System.out.println("Current balance: " + player_zoo.getBalance());
+        System.out.println("Domain purchased successfully. Welcome home!");
     }
 
     //-----------------------------------------------------------------[SELL DOMAIN]
@@ -369,6 +381,8 @@ public class Player {
                 }
             }
         }
+        System.out.println("Current balance: " + player_zoo.getBalance());
+        System.out.println("Domain sold successfully. We will miss you!");
     }
 
 
@@ -398,8 +412,9 @@ public class Player {
                 }
             }
         }
+        System.out.println("Current balance: " + player_zoo.getBalance());
+        System.out.println("Animal purchased successfully. Your new home awaits!");
     }
-
 
 
     //-----------------------------------------------------------------[RETRY]
@@ -412,6 +427,12 @@ public class Player {
             if (input.equalsIgnoreCase("n")) return false;
             System.out.println("Input incorrect, try again.");
         }
+    }
+
+    //-----------------------------------------------------------------[LOAD ADMIN SHOP]
+
+    private Shop getAdminShop() {
+        return Admin.getInstance().getAdminShop();
     }
 
 }

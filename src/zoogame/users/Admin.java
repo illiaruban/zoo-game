@@ -15,11 +15,20 @@ import zoogame.exceptions.InvalidAnimalParameterException;
 import zoogame.factories.AnimalFactory;
 
 public class Admin {
+
+    private static Admin admin;
     private Shop admin_shop = new Shop();
 
-    public Admin() {}
-    public Admin(Shop admin_shop) {
+    private Admin() {
+        admin_shop = new Shop();
+    }
+    private Admin(Shop admin_shop) {
         this.admin_shop = admin_shop;
+    }
+
+    public static Admin getInstance() {
+        if (admin == null) admin = new Admin();
+        return admin;
     }
 
     public void manageGame() {
@@ -335,5 +344,8 @@ public class Admin {
 
     }
 
+    public Shop getAdminShop() {
+        return admin_shop;
+    }
 
 }

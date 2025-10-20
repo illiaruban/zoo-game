@@ -19,7 +19,7 @@ public class Zoo {
 
 
     public Zoo() {
-        balance = 20000;
+        balance = 30000;
         foodStorage = new HashMap<>();
     };
 
