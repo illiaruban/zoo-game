@@ -64,6 +64,7 @@ public class AnimalFoodPack {
 
             }
         }
+        string += "Price: " + price;
         return string;
     }
 

@@ -23,6 +23,8 @@ public abstract class Animal {
     protected int todayEatCounter = 0;
     protected double fullIncome;
 
+    protected boolean fedInThisStage = false;
+
 
     public Animal(String name, double price){
         this.name = name;
@@ -102,6 +104,10 @@ public abstract class Animal {
     public double getFullIncome() { return fullIncome; }
 
     public HashMap<String, Boolean> getFedPerDay() { return fedPerDay; }
+
+    public boolean isFedInThisStage () { return fedInThisStage; }
+
+    public void setFedInThisStage(boolean fedInThisStage) {this.fedInThisStage = fedInThisStage;}
 
 
     public String toString() {

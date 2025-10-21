@@ -158,16 +158,21 @@ public class Domain {
 
     //feed animals in every domain
     //function also should take food packs as parameter
-    public void feedAnimals(String timeOfDay, int amountOfFood) throws NotEnoughFoodException{
+    public int feedAnimals(String timeOfDay, int amountOfFood) throws NotEnoughFoodException{
         int timesToFeed = animals.getFirst().getTimesToFeedPerDay();
         if (timesToFeed == 2 && timeOfDay.equals("day")) {
-            return;
+            return 0;
         }
+        int requiredFood = 0;
         for (Animal animal:animals) {
+            if (animal.isFedInThisStage()) continue;
             if (amountOfFood == 0) throw new NotEnoughFoodException(nameOfDomain + " had not enough food.");
             animal.feed(timeOfDay);
+            animal.setFedInThisStage(true);
             amountOfFood--;
+            requiredFood++;
         }
+        return requiredFood;
     }
 
 }

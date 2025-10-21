@@ -190,7 +190,7 @@ public class Zoo {
         for (Domain domain: domains) {
             todayCoefficient += domain.closeDay();
         }
-        System.out.println("Your income for the day:" + amountVisitors * todayCoefficient);
+        System.out.println("Your income for the day: " + amountVisitors * todayCoefficient);
         balance += amountVisitors * todayCoefficient;
         Random random = new Random();
         int lowerLimit = 0;
@@ -269,9 +269,15 @@ public class Zoo {
             if (type == null) continue;
             int amountOfFood = foodStorage.get(type) > domain.getCurrentAmountOfAnimals() ?
                     domain.getCurrentAmountOfAnimals() : foodStorage.get(type);
-            foodStorage.put(type, foodStorage.get(type) - amountOfFood);
+
+            //problem: amount of food decreases nonetheless even if animal was fed in this stage
+            //int requiredFood = domain.feedAnimals(dayTime, amountOfFood);
+            //foodStorage.put(type, foodStorage.get(type) - requiredFood);
+            //make domain.feedAnimals() return int
+            //idea: try to solve it by creating a variable that represents leftover food that we add to our food storage
             try {
-                domain.feedAnimals(dayTime, amountOfFood);
+                int requiredFood = domain.feedAnimals(dayTime, amountOfFood);
+                foodStorage.put(type, foodStorage.get(type) - requiredFood);
             }
             catch (NotEnoughFoodException e) {
                 System.out.println("Domain " + domains.indexOf(domain) + ":" + e.getMessage());
