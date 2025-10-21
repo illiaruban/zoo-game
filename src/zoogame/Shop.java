@@ -1,6 +1,7 @@
 package zoogame;
 
 import zoogame.animals.Animal;
+import zoogame.animals.AnimalType;
 import zoogame.animals.SizeClass;
 import zoogame.domains.Domain;
 import zoogame.domains.InsectDomain;
@@ -10,10 +11,32 @@ import zoogame.factories.AnimalFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Shop {
     protected ArrayList<Animal> availableAnimals = new ArrayList<>();
-    protected ArrayList<AnimalFoodPack> animalFoodPacks = new ArrayList<>();
+
+    protected ArrayList<AnimalFoodPack> animalFoodPacks = new ArrayList<>(List.of(
+        new AnimalFoodPack("Small Mammal Pack", new HashMap(Map.of(AnimalType.MAMMAL, 10)), 1000),
+            new AnimalFoodPack("Great Mammal Pack", new HashMap(Map.of(AnimalType.MAMMAL, 30)), 2900),
+            new AnimalFoodPack("Small Bird Pack", new HashMap(Map.of(AnimalType.BIRD, 10)), 850),
+            new AnimalFoodPack("Great Bird Pack", new HashMap(Map.of(AnimalType.BIRD, 30)), 2500),
+            new AnimalFoodPack("Small Insect Pack", new HashMap(Map.of(AnimalType.INSECT, 10)), 400),
+            new AnimalFoodPack("Great Insect Pack", new HashMap(Map.of(AnimalType.INSECT, 30)), 1100),
+            new AnimalFoodPack("Small Reptile Pack", new HashMap(Map.of(AnimalType.REPTILE, 10)), 1500),
+            new AnimalFoodPack("Great Reptile Pack", new HashMap(Map.of(AnimalType.REPTILE, 10)), 4200),
+            new AnimalFoodPack("Small Everything Pack", new HashMap(Map.of(
+                    AnimalType.MAMMAL, 10,
+                    AnimalType.REPTILE, 10,
+                    AnimalType.INSECT, 10,
+                    AnimalType.BIRD, 10)), 3700),
+            new AnimalFoodPack("Great Everything Pack", new HashMap(Map.of(
+                    AnimalType.MAMMAL, 30,
+                    AnimalType.BIRD, 30,
+                    AnimalType.INSECT, 30,
+                    AnimalType.REPTILE, 30)), 10_600)
+
+    ));
 
     protected ArrayList<Domain> availableDomains = new ArrayList<Domain>(List.of(
             new Domain(5000, SizeClass.TINY), new Domain(10000, SizeClass.AVERAGE),

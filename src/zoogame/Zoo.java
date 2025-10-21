@@ -12,7 +12,7 @@ public class Zoo {
     private ArrayList<Domain> domains = new ArrayList<>();
     private boolean isOpened = false;
     private double balance;
-    private HashMap<AnimalType, Integer> foodStorage;
+    private HashMap<AnimalType, Integer> foodStorage = new HashMap<>();
 
     private static int decreaseVisitorsCounter = 0;
     private int amountVisitors = 15;
@@ -20,7 +20,10 @@ public class Zoo {
 
     public Zoo() {
         balance = 30000;
-        foodStorage = new HashMap<>();
+        foodStorage.putAll(Map.of(AnimalType.BIRD, 0,
+                AnimalType.MAMMAL, 0,
+                AnimalType.REPTILE, 0,
+                AnimalType.INSECT, 0));
     };
 
     public Zoo(Zoo other) {
@@ -162,8 +165,6 @@ public class Zoo {
             System.out.println(e.getMessage());
         }
     }
-
-    //TODO: change logic so scanner is given as parameter and the index is entered here
     public void sellAnimal(int index) throws NoAnimalFoundException, NoDomainFoundException {
         if (domains.size() < index || index < 0) {
             throw new NoDomainFoundException("There is no domain under such index");

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class AnimalFoodPack {
     private String nameOfPack;
-    protected HashMap<AnimalType, Integer> content;
+    protected HashMap<AnimalType, Integer> content = new HashMap<>();
 
     private double price = 100.0;
 
