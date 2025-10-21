@@ -253,6 +253,7 @@ public class Admin {
     }
     //------------------------------------------------------------------[CHANGE ANIMAL INFO]
 
+    //TODO: add conditions to check valid index
     public void editAnimal(Scanner scanner) {
         printAnimalList(); // show animals with numbers
 
@@ -287,30 +288,35 @@ public class Admin {
             try {
                 switch (parameter) {
                     case "name" -> {
+                        System.out.println("Enter new name: ");
                         String newName = InputReader.readName(scanner, "animal name");
                         animal.setName(newName);
                         System.out.println("Name updated successfully.");
                         return;
                     }
                     case "price" -> {
+                        System.out.println("Enter new price: ");
                         double newPrice = InputReader.readPrice(scanner);
                         animal.setPrice(newPrice);
                         System.out.println("Price updated successfully.");
                         return;
                     }
                     case "full_income" -> {
+                        System.out.println("Enter new full income: ");
                         double newIncome = InputReader.readIncome(scanner, animal.getPrice());
                         animal.setFullIncome(newIncome);
                         System.out.println("Full income updated successfully.");
                         return;
                     }
                     case "amount_domain" -> {
+                        System.out.println("Enter new max amount in domain: ");
                         int maxInDomain = InputReader.readPositiveInteger(scanner, "in_domain");
                         animal.setMaxAmountInDomain(maxInDomain);
                         System.out.println("Max domain amount updated.");
                         return;
                     }
                     case "amount_feed" -> {
+                        System.out.println("Enter new amount of times animal must be fed per day: ");
                         int feed = InputReader.readPositiveInteger(scanner, "feed");
                         animal.setTimesToFeedPerDay(feed);
                         System.out.println("Feed times updated.");

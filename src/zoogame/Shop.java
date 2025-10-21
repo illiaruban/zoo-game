@@ -106,7 +106,7 @@ public class Shop {
 
     public int getAnimalsAmount() { return availableAnimals.size(); }
 
-    public int getDomainsAmount() { return availableAnimals.size(); }
+    public int getDomainsAmount() { return availableDomains.size(); }
 
     public ArrayList<Animal> getAvailableAnimals() { return availableAnimals; }
 

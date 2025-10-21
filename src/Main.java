@@ -10,7 +10,6 @@ public class Main {
         Player player = new Player();
         player.manageGame();
 
-        //incorrect indexing while buying food pack
 
     }
 

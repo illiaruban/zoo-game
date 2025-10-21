@@ -299,7 +299,7 @@ public class Player {
         player_shop.printFoodPacks();
         while(true) {
             System.out.print("Enter the number of the pack you want to purchase: ");
-            int number = scanner.nextInt();
+            int number = scanner.nextInt() - 1;
             scanner.nextLine();
             try {
                 AnimalFoodPack foodPack = new AnimalFoodPack(player_shop.getAnimalFoodPacks().get(number));
