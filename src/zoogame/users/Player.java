@@ -194,7 +194,7 @@ public class Player {
                     "7 - see the list of animals to be fed during all phases\n" +
                     "8 - print the current amount of food for every type of animal\n" +
                     "9 - see all domains and animals in it\n" +
-                    "0 - proceed to evening phase");
+                    "0 - proceed to next day");
             System.out.println("> ");
             int input_command = scanner.nextInt();
             scanner.nextLine();
@@ -230,6 +230,7 @@ public class Player {
                     System.out.println("Evening phase is over. Good work, boss!");
                     eveningTime = false;
                     morningTime = true;
+                    player_zoo.closeDay();
                     return;
                 default:
                     System.out.println("No command under that number.");

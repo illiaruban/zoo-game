@@ -160,6 +160,7 @@ public class Zoo {
             else {
                 throw new NoDomainFoundForAnimalException("No domain found for this animal");
             }
+            balance -= animal.getPrice();
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
@@ -189,6 +190,7 @@ public class Zoo {
         for (Domain domain: domains) {
             todayCoefficient += domain.closeDay();
         }
+        System.out.println("Your income for the day:" + amountVisitors * todayCoefficient);
         balance += amountVisitors * todayCoefficient;
         Random random = new Random();
         int lowerLimit = 0;
@@ -274,6 +276,7 @@ public class Zoo {
             catch (NotEnoughFoodException e) {
                 System.out.println("Domain " + domains.indexOf(domain) + ":" + e.getMessage());
             }
+            printFoodStorage();
         }
     }
 

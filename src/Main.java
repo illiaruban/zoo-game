@@ -10,7 +10,7 @@ public class Main {
         Player player = new Player();
         player.manageGame();
 
-
+        //TODO: balance the income for the day
     }
 
 
