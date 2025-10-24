@@ -13,7 +13,7 @@ class ReptileDomainTest {
     ReptileDomain domain = new ReptileDomain();
 
     @Test
-    void rumbleStarted()
+    void rumbleHappened()
     {
         domain.addAnimal(crocodile);
         for (int i = 0; i < 2; i++) {

@@ -28,6 +28,10 @@ public class Insect extends Animal{
     }
     public boolean isVanished() { return vanished; }
 
+    public void setVanished(boolean vanished) {
+        this.vanished = vanished;
+    }
+
     //idea: just check the todayEatCounter
     public double getIncome(){
         if (todayEatCounter < lowerQuality) {
