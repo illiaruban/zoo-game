@@ -228,6 +228,10 @@ public class Zoo {
         else return -1;
     }
 
+    public int getAmountVisitors() {
+        return amountVisitors;
+    }
+
     public void printListUnfedAnimals() {
         final int MORNING = 0, DAY = 1, EVENING = 2;
 

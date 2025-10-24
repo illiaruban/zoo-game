@@ -37,10 +37,11 @@ public class Mammal extends Animal{
     }
 
     //if mammal is aggressive and is not fed for 2 days - numbers of customers will decrease
-    // for every unfed animal and income is too by 10%
-    //if mammal is non-aggressive - the income will decrease by 30%
+    // for every unfed animal and income is too by 20%
+    //if mammal is non-aggressive - the income will decrease by 40%
 
     //get a way to decrease the amount of visitors
+    //return 0.7 and 0.8
     public double getIncome(){
         double coefficient = 1.0;
         if (todayEatCounter <= lowerQuality) {
@@ -49,12 +50,12 @@ public class Mammal extends Animal{
         }
         if (aggressiveCount == 2) {
             Zoo.incrDecreaseVisitorsCounter();
-            coefficient = 0.25;
+            coefficient = 0.8;
             aggressiveCount--;
         }
         else if (counterToSubtract == 2) {
             Zoo.incrDecreaseVisitorsCounter();
-            coefficient = 0.5;
+            coefficient = 0.6;
             counterToSubtract--;
         }
         else if (todayEatCounter == timesToFeedPerDay) {

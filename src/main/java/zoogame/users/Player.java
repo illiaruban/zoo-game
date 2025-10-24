@@ -106,15 +106,18 @@ public class Player {
             switch(input_command) {
                 case 1:
                     buyFood(scanner);
+                    printBalance();
                     break;
                 case 2:
                     buyDomain(scanner);
+                    printBalance();
                     break;
                 case 3:
                     feedAnimals("morning");
                     break;
                 case 4:
                     sellAnimal(scanner);
+                    printBalance();
                     break;
                 case 5:
                     printAnimalsToBeFed();
@@ -158,6 +161,7 @@ public class Player {
                     break;
                 case 2:
                     sellAnimal(scanner);
+                    printBalance();
                     break;
                 case 3:
                     printAnimalsToBeFed();
@@ -204,18 +208,23 @@ public class Player {
                     break;
                 case 2:
                     buyAnimal(scanner);
+                    printBalance();
                     break;
                 case 3:
                     buyDomain(scanner);
+                    printBalance();
                     break;
                 case 4:
                     sellAnimal(scanner);
+                    printBalance();
                     break;
                 case 5:
                     sellDomain(scanner);
+                    printBalance();
                     break;
                 case 6:
                     buyFood(scanner);
+                    printBalance();
                     break;
                 case 7:
                     printAnimalsToBeFed();
@@ -228,6 +237,7 @@ public class Player {
                     break;
                 case 0:
                     System.out.println("Evening phase is over. Good work, boss!");
+                    System.out.println("Amount of visitors your zoo had today: " +player_zoo.getAmountVisitors());
                     eveningTime = false;
                     morningTime = true;
                     player_zoo.closeDay();
@@ -289,7 +299,6 @@ public class Player {
                 }
             }
         }
-        System.out.println("Current balance: " + player_zoo.getBalance());
         System.out.println("Animal sold successfully. Bye bye!");
     }
 
@@ -314,7 +323,6 @@ public class Player {
                 }
             }
         }
-        System.out.println("Current balance: " + player_zoo.getBalance());
         System.out.println("Food pack purchased.");
 
     }
@@ -339,7 +347,6 @@ public class Player {
                 }
             }
         }
-        System.out.println("Current balance: " + player_zoo.getBalance());
         System.out.println("Domain purchased successfully. Welcome home!");
     }
 
@@ -382,7 +389,6 @@ public class Player {
                 }
             }
         }
-        System.out.println("Current balance: " + player_zoo.getBalance());
         System.out.println("Domain sold successfully. We will miss you!");
     }
 
@@ -413,7 +419,6 @@ public class Player {
                 }
             }
         }
-        System.out.println("Current balance: " + player_zoo.getBalance());
         System.out.println("Animal purchased successfully. Your new home awaits!");
     }
 
@@ -434,6 +439,12 @@ public class Player {
 
     private Shop getAdminShop() {
         return Admin.getInstance().getAdminShop();
+    }
+
+    //-----------------------------------------------------------------[PRINT CURRENT BALANCE]
+
+    private void printBalance(){
+        System.out.println("Your current balance:" + player_zoo.getBalance());
     }
 
 }
