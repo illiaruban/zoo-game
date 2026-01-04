@@ -46,7 +46,7 @@ class MammalTest {
         //lowerlimit 5, upperLimit 10
         //20 <= amountVisitors <= 25
         assertTrue(zoo.getAmountVisitors() >= 20  && zoo.getAmountVisitors() <= 25);
-        assertTrue(zoo.getBalance() == oldBalance + 600);
+        assertTrue(zoo.getBalance() == oldBalance + 30 * 0.8 * aggressiveMammal.getFullIncome());
 
     }
 
