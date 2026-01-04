@@ -36,24 +36,34 @@ public class Mammal extends Animal{
         return counterToSubtract;
     }
 
+    public void setCounter(int counterToSubtract) {
+        this.counterToSubtract = counterToSubtract;
+    }
+
+    public int getAggressiveCount() { return aggressiveCount; }
+
+    public void setAggressiveCount(int aggressiveCount) {
+        this.aggressiveCount = aggressiveCount;
+    }
+
     //if mammal is aggressive and is not fed for 2 days - numbers of customers will decrease
     // for every unfed animal and income is too by 20%
     //if mammal is non-aggressive - the income will decrease by 40%
 
     //get a way to decrease the amount of visitors
-    //return 0.7 and 0.8
+    //return 0.6 and 0.8
     public double getIncome(){
         double coefficient = 1.0;
         if (todayEatCounter <= lowerQuality) {
             if (isAggressive) aggressiveCount++;
-            counterToSubtract++;
+            else counterToSubtract++;
         }
-        if (aggressiveCount == 2) {
+        if (aggressiveCount >= 2) {
             Zoo.incrDecreaseVisitorsCounter();
             coefficient = 0.8;
             aggressiveCount--;
         }
-        else if (counterToSubtract == 2) {
+        else if (counterToSubtract >= 2) {
             Zoo.incrDecreaseVisitorsCounter();
             coefficient = 0.6;
             counterToSubtract--;
@@ -62,6 +72,6 @@ public class Mammal extends Animal{
             aggressiveCount = 0;
             counterToSubtract = 0;
         }
-        return coefficient;
+        return coefficient * fullIncome;
     }
 }

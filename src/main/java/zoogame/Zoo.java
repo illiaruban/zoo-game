@@ -65,9 +65,7 @@ public class Zoo {
 
     public HashMap<AnimalType, Integer> getFoodStorage() {return foodStorage;}
 
-    public void setNumberOfVisitors(int numberOfVisitors) { amountVisitors = numberOfVisitors; }
-
-    public int getNumberOfVisitors() { return amountVisitors; }
+    public void setAmountVisitors(int numberOfVisitors) { amountVisitors = numberOfVisitors; }
 
     public static void incrDecreaseVisitorsCounter() {
         decreaseVisitorsCounter++;
@@ -186,12 +184,12 @@ public class Zoo {
      *
      */
     public void closeDay() {
-        double todayCoefficient = 0.0;
+        double income = 0.0;
         for (Domain domain: domains) {
-            todayCoefficient += domain.closeDay();
+            income += domain.closeDay();
         }
-        System.out.println("Your income for the day: " + amountVisitors * todayCoefficient);
-        balance += amountVisitors * todayCoefficient;
+        System.out.println("Your income for the day: " + amountVisitors * income);
+        balance += amountVisitors * income;
         Random random = new Random();
         int lowerLimit = 0;
         int upperLimit = 0;

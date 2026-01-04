@@ -4,6 +4,7 @@ import zoogame.AnimalFoodPack;
 import zoogame.animals.*;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NotEnoughFoodException;
+import zoogame.exceptions.NotEnoughPlaceException;
 import zoogame.factories.AnimalFactory;
 
 import java.util.ArrayList;
@@ -40,8 +41,10 @@ public class Domain {
     }
 
     //might write all the checks in zoo function as its zoo's job to check all conditions to add animal in domains
-    public void addAnimal(Animal animal) {
+    public void addAnimal(Animal animal) throws NotEnoughPlaceException{
         if (animals.size() == 0) nameOfDomain = animal.getName() + " domain";
+        else if (animals.size() == animals.get(0).getMaxAmountInDomain())
+            throw new NotEnoughPlaceException(this.getNameOfDomain() + "- Maximum amount of animals in domain is reached");
         animals.add(animal);
     }
 
@@ -111,12 +114,12 @@ public class Domain {
 
     public double closeDay() {
         if (animals.isEmpty()) return 0.0;
-        double sumCoefficients = 0.0;
+        double sumIncomes = 0.0;
         for (Animal animal: animals) {
-            sumCoefficients += animal.getIncome();
+            sumIncomes += animal.getIncome();
             animal.endDay();
         }
-        return sumCoefficients;
+        return sumIncomes;
     }
 
     //we must learn how many animals of each type have to be fed during morning, day and evening

@@ -40,6 +40,6 @@ public class Bird extends Animal{
         }
         counterToAdd = 1;
         counterToSubtract = 0;
-        return coefficient;
+        return coefficient * fullIncome;
     }
 }

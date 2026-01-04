@@ -25,7 +25,7 @@ public class Reptile extends Animal{
         if (todayEatCounter < lowerQuality) {
             countToEat++;
         }
-        return 1.0;
+        return fullIncome;
     }
 
 

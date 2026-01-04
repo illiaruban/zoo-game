@@ -9,6 +9,7 @@ import zoogame.animals.Mammal;
 import zoogame.animals.SizeClass;
 import zoogame.exceptions.NoAnimalFoundException;
 import zoogame.exceptions.NotEnoughFoodException;
+import zoogame.exceptions.NotEnoughPlaceException;
 
 class DomainTest {
 
@@ -17,7 +18,7 @@ class DomainTest {
             10, 3, true, 250);
 
     @BeforeEach
-    void initialize() {
+    void initialize() throws NotEnoughPlaceException {
         domain.setSizeClass(SizeClass.AVERAGE);
         domain.addAnimal(lion);
     }
@@ -36,7 +37,7 @@ class DomainTest {
     }
 
     @Test
-    void receiveNotEnoughFoodException() {
+    void receiveNotEnoughFoodException() throws NotEnoughPlaceException {
         int amountOfFood = 1;
         domain.addAnimal(new Mammal(lion));
         assertThrows(NotEnoughFoodException.class,() -> {
@@ -45,7 +46,7 @@ class DomainTest {
     }
 
     @Test
-    void feedingAnimals() {
+    void feedingAnimals() throws NotEnoughPlaceException {
         int amountOfFood = 2;
         domain.addAnimal(new Mammal(lion));
         assertDoesNotThrow(() -> {

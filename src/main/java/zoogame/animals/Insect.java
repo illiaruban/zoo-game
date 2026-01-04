@@ -41,7 +41,7 @@ public class Insect extends Animal{
             vanished = true;
             return 0.0;
         }
-        return 1.0;
+        return fullIncome;
     }
 
 }

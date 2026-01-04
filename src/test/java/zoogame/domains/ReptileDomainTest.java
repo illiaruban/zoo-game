@@ -3,6 +3,7 @@ package zoogame.domains;
 import org.junit.jupiter.api.Test;
 import zoogame.animals.Reptile;
 import zoogame.animals.SizeClass;
+import zoogame.exceptions.NotEnoughPlaceException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,8 +14,7 @@ class ReptileDomainTest {
     ReptileDomain domain = new ReptileDomain();
 
     @Test
-    void rumbleHappened()
-    {
+    void rumbleHappened() throws NotEnoughPlaceException {
         domain.addAnimal(crocodile);
         for (int i = 0; i < 2; i++) {
             Reptile copy = new Reptile(crocodile);
