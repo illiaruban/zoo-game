@@ -23,6 +23,11 @@ class MammalTest {
     Mammal nonAggressiveMammal = new Mammal("Rabbit", 2000.0, SizeClass.TINY,
             20, 3, false, 25.0);
 
+    @BeforeEach
+    void init() {
+        zoo.setAmountVisitors(30);
+    }
+
     @Test
     void unfedConditionAggressive() {
         try{
@@ -39,17 +44,33 @@ class MammalTest {
         aggressiveMammal.todayEatCounter = 0;
         aggressiveMammal.setAggressiveCount(1);
 
-        zoo.setAmountVisitors(30);
         zoo.closeDay();
 
-        //amountVisitors -= random.nextInt(lowerLimit, upperLimit) * 1
-        //lowerlimit 5, upperLimit 10
-        //20 <= amountVisitors <= 25
         assertTrue(zoo.getAmountVisitors() >= 20  && zoo.getAmountVisitors() <= 25);
         assertTrue(zoo.getBalance() == oldBalance + 30 * 0.8 * aggressiveMammal.getFullIncome());
 
     }
 
+    @Test
+    void unfedConditionNonaggressive() {
+        try{
+            zoo.buyDomain(nonAggressiveDomain);
+            zoo.buyAnimal(nonAggressiveMammal);
+        }
+        catch (LowBalanceException e) {
 
+        }
+        catch (NoDomainFoundForAnimalException e){
+
+        }
+        double oldBalance = zoo.getBalance();
+        nonAggressiveMammal.todayEatCounter = 0;
+        nonAggressiveMammal.setCounter(1);
+
+        zoo.closeDay();
+
+        assertTrue(zoo.getAmountVisitors() >= 20  && zoo.getAmountVisitors() <= 25);
+        assertTrue(zoo.getBalance() == oldBalance + 30 * 0.6 * aggressiveMammal.getFullIncome());
+    }
 
 }
