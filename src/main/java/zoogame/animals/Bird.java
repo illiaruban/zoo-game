@@ -22,6 +22,12 @@ public class Bird extends Animal{
         return counterToSubtract;
     }
 
+    public void setCounterToSubtract(int counterToSubtract) {this.counterToSubtract = counterToSubtract;}
+
+    public int getCounterToAdd() {return counterToAdd;}
+
+    public void setCounterToAdd(int counterToAdd) {this.counterToAdd = counterToAdd;}
+
     public double getIncome(){
         if (todayEatCounter == timesToFeedPerDay && counterToAdd > 0) {
             counterToAdd++;
@@ -31,15 +37,13 @@ public class Bird extends Animal{
             counterToSubtract++;
         }
         double coefficient;
-        if (counterToAdd == 4) {
+        if (counterToAdd >= 4) {
             coefficient = 1.25;
-        } else if (counterToSubtract == 2) {
+        } else if (counterToSubtract >= 2) {
             coefficient = 0.5;
         } else {
             coefficient = 1.0;
         }
-        counterToAdd = 1;
-        counterToSubtract = 0;
         return coefficient * fullIncome;
     }
 }
