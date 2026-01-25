@@ -15,10 +15,6 @@ public class Main {
             player.manageGame();
         }
 
-
-        //TODO: balance the income for the day
-        //TODO:add print balance function
-        //TODO: add print visitors count
     }
 
 
