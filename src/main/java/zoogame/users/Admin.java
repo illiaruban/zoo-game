@@ -14,6 +14,8 @@ import zoogame.domains.Domain;
 import zoogame.exceptions.InvalidAnimalParameterException;
 import zoogame.factories.AnimalFactory;
 
+import static java.lang.System.exit;
+
 public class Admin {
 
     private static Admin admin;
@@ -42,6 +44,7 @@ public class Admin {
                     "4 - edit domain's price\n" +
                     "5 - print all domains\n" +
                     "6 - change animal info\n" +
+                    "7 - switch to player mode\n" +
                     "0 - exit");
             System.out.print("> ");
             int command = scanner.nextInt();
@@ -49,47 +52,42 @@ public class Admin {
             switch(command) {
                 case 1:
                     System.out.println("----------------[ADD NEW ANIMAL]-----------------");
-                    //adds an animal
                     addNewAnimal(scanner);
                     System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 2:
                     System.out.println("----------------[DELETE ANIMAL]-----------------");
-                    //delete an animal from the shop
                     deleteAnimal(scanner);
                     System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 3:
                     System.out.println("----------------[PRINT ANIMALS]-----------------");
-                    //prints the animals list of the shop
                     System.out.println("Animals added in the shop:");
                     printAnimalList();
                     System.out.println("----------------[FINISH]-----------------");
                     break;
-                    //then edit a food pack and so on...
                 case 4:
                     System.out.println("----------------[CHANGE DOMAIN PRICE]-----------------");
-                    //print all domains
                     editDomainPrice(scanner);
                     System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 5:
                     System.out.println("----------------[PRINT DOMAINS]-----------------");
-                    //edit price in domain
                     System.out.println("Domains in the shop:");
                     printDomainList();
                     System.out.println("----------------[FINISH]-----------------");
                     break;
                 case 6:
                     System.out.println("----------------[CHANGE ANIMAL INFO]-----------------");
-                    //edit animal name, price, fullIncome
                     editAnimal(scanner);
                     System.out.println("----------------[FINISH]-----------------");
                     break;
-                case 0:
-                    System.out.println("Logging out as admin.");
-
+                case 7:
+                    System.out.println("Logging out as admin. Switching to player mode...");
                     return;
+                case 0:
+                    System.out.println("Quit application.");
+                    exit(0);
                 default:
                     System.out.println("Incorrect command.");
                     if (!wantsToRetry(scanner)) {

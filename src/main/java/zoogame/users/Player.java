@@ -13,6 +13,8 @@ import zoogame.factories.AnimalFactory;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 /**
  * Describes player's functionality during three phases of game.
  * Planned:
@@ -38,18 +40,23 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome, Player!");
         while (true) {
-            System.out.println("Would you like to start a game?\n" +
+            System.out.println("Would you like to play a game?\n" +
                     "1 - yes\n" +
-                    "0 - no");
+                    "2 - no and switch to admin mode\n" +
+                    "0 - no and quit application");
             System.out.print("> ");
             String input = scanner.nextLine().trim();
             if (input.equals("1")) {
                 System.out.println("You started the game!");
                 break;
             }
+            else if (input.equals("2")) {
+                System.out.println("Switching to admin mode.");
+                return;
+            }
             else if (input.equals("0")) {
                 System.out.println("You exit the game. Come back soon!");
-                return;
+                exit(0);
             }
             else {
                 System.out.println("Input incorrect. Please enter '1' to start the game OR '0' to stop playing");
